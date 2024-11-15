@@ -1,28 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
 public class EnemyManager : IFixedTickable
 {
     private Border _border;
-    //private Enemy.Factory _enemyFactory;
     private EnemyPool _enemyPool;
-    private float timer;
+    private Settings _settings;
+    private float timer = 0;
 
     [Inject]
-    private void Construct(Border border, EnemyPool enemyPool /*, Enemy.Factory enemyFactory*/)
+    private void Construct(Border border, EnemyPool enemyPool, Settings settings)
     {
         this._border = border;
         this._enemyPool = enemyPool;
-        //this._enemyFactory = enemyFactory;
+        this._settings = settings;
+
+
+        
+    }
+
+    private void Start()
+    {
+        if (_settings.SpawnOnStart)
+        {
+            timer = _settings.TimeSpawn;
+        }
     }
 
     private void SpawnEnemy()
     {
-        /*Enemy enemy = _enemyFactory.Create();
-        enemy.transform.position = _border.GetRandomPositionOnBorder();*/
         Enemy enemy = _enemyPool.Spawn(null);
         enemy.transform.position = _border.GetRandomPositionOnBorder();
         CountNumberInPool();
@@ -43,10 +53,17 @@ public class EnemyManager : IFixedTickable
     public void FixedTick()
     {
         timer += Time.fixedDeltaTime;
-        if(timer >= 1)
+        if(timer >= _settings.TimeSpawn)
         {
             SpawnEnemy();
             timer = 0;
         }
+    }
+
+    [System.Serializable]
+    public class Settings
+    {
+        public float TimeSpawn;
+        public bool SpawnOnStart;
     }
 }

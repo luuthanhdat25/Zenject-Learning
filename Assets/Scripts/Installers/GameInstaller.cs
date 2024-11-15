@@ -11,14 +11,14 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        SignalBusInstaller.Install(Container);
+        GameSignalInstaller.Install(Container);
+
         Container.Bind<Border>().FromComponentInNewPrefab(borderPrefab).AsSingle().NonLazy();
         Container.Bind<Player>().FromComponentInNewPrefab(playerPrefab).AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
 
-        //Container.BindFactory<Enemy, Enemy.Factory>().FromMonoPoolableMemoryPool(
-        //    x => x.WithInitialSize(3).FromComponentInNewPrefab(_settings.EnemyPrefab).UnderTransformGroup("EnemyPooll"));
-
-        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(1)
+        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(5)
             .FromComponentInNewPrefab(_settings.EnemyPrefab)
             .UnderTransformGroup("EnemyPool");
     }

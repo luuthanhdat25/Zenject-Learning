@@ -6,10 +6,14 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
 {
     public GameInstaller.Settings GameInstaller;
     public Enemy.Settings Enemy;
+    public EnemyManager.Settings EnemyManager;
+    public Player.Settings Player;
 
     public override void InstallBindings()
     {
         Container.BindInstance(GameInstaller);
         Container.BindInstance(Enemy);
+        Container.BindInstance(EnemyManager);
+        Container.BindInstance(Player);
     }
 }

@@ -15,4 +15,10 @@ MonoBehaviour:
   GameInstaller:
     EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
   Enemy:
-    moveSpeed: 5
+    MoveSpeed: 4
+    Damage: 3
+  EnemyManager:
+    TimeSpawn: 1
+    SpawnOnStart: 0
+  Player:
+    Health: 100

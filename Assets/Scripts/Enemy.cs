@@ -4,18 +4,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Enemy : MonoBehaviour/*, IPoolable<IMemoryPool>, IDisposable*/
+public class Enemy : MonoBehaviour
 {
     private Player _player;
     private Settings _settings;
     private EnemyPool _pool;
+    private SignalBus _signalBus;
+    private bool hasCollided = false;
 
     [Inject]
-    public void Construct(Settings settings, Player player, EnemyPool enemyPool)
+    public void Construct(Settings settings, Player player, EnemyPool enemyPool, SignalBus signalBus)
     {
         _settings = settings;
         _player = player;
         _pool = enemyPool;
+        _signalBus = signalBus;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (hasCollided) return;
+        if (collision.GetComponent<Player>() != null)
+        {
+            hasCollided = true;
+            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.Damage });
+            _pool.Despawn(this);
+        }
     }
 
     private void Update()
@@ -29,43 +43,20 @@ public class Enemy : MonoBehaviour/*, IPoolable<IMemoryPool>, IDisposable*/
 
         float distance = Vector2.Distance(transform.position, playerPosition);
 
-        if (distance <= 0.1f)
-        {
-            _pool.Despawn(this);
-        }
-
         Vector3 direction = (playerPosition - transform.position).normalized;
-        transform.position += direction * _settings.moveSpeed * Time.deltaTime;
+        transform.position += direction * _settings.MoveSpeed * Time.deltaTime;
     }
-
-    /*public void OnDespawned()
-    {
-        _pool = null;
-    }
-
-    public void OnSpawned(IMemoryPool pool)
-    {
-        _pool = pool;
-    }
-
-
-    public void Dispose()
-    {
-        _pool.Despawn(this);
-    }*/
 
     [System.Serializable]
     public class Settings
     {
-        public float moveSpeed;
+        public float MoveSpeed;
+        public int Damage;
     }
-
-    //public class Factory : PlaceholderFactory<Enemy>
-    //{
-    //}
 
     public void ResetSetting(Settings settings)
     {
+        hasCollided = false;
         if (settings == null) return;
         _settings = settings;
     }
