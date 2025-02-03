@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class EnemyManager : IFixedTickable
@@ -18,9 +14,6 @@ public class EnemyManager : IFixedTickable
         this._border = border;
         this._enemyPool = enemyPool;
         this._settings = settings;
-
-
-        
     }
 
     private void Start()

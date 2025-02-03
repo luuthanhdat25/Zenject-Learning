@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,7 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
     public Enemy.Settings Enemy;
     public EnemyManager.Settings EnemyManager;
     public Player.Settings Player;
+    public List<Weapon.Settings> Weapons;
 
     public override void InstallBindings()
     {
@@ -15,5 +17,6 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
         Container.BindInstance(Enemy);
         Container.BindInstance(EnemyManager);
         Container.BindInstance(Player);
+        Container.BindInstance(Weapons);
     }
 }

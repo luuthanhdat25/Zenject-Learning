@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +8,8 @@ public class Enemy : MonoBehaviour
     private EnemyPool _pool;
     private SignalBus _signalBus;
     private bool hasCollided = false;
+
+    [SerializeField] private Rigidbody2D rigidbody2D;
 
     [Inject]
     public void Construct(Settings settings, Player player, EnemyPool enemyPool, SignalBus signalBus)
@@ -32,7 +31,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void FixedUpdate()
     {
         MoveTowardsPlayer();
     }
@@ -41,10 +45,14 @@ public class Enemy : MonoBehaviour
     {
         Vector3 playerPosition = _player.GetPosition();
 
-        float distance = Vector2.Distance(transform.position, playerPosition);
-
         Vector3 direction = (playerPosition - transform.position).normalized;
-        transform.position += direction * _settings.MoveSpeed * Time.deltaTime;
+        Vector3 currentScale = transform.localScale;
+        if((direction.x >= 0 && currentScale.x < 0) || (direction.x < 0 && currentScale.x > 0))
+        {
+            currentScale.x *= -1; 
+            transform.localScale = currentScale;
+        }
+        rigidbody2D.velocity = direction * _settings.MoveSpeed;
     }
 
     [System.Serializable]
