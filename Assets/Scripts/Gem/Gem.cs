@@ -30,7 +30,7 @@ public class Gem : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isMove) return;
-        if(isMoveToPlayer) targetPosition = _player.GetPosition(); 
+        if(isMoveToPlayer) targetPosition = _player.transform.position; 
 
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.fixedDeltaTime;

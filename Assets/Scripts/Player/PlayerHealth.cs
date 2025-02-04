@@ -1,48 +1,102 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private SignalBus _signalBus;
-    private Player.Settings _settings;
+    [Inject] private Player player;
+    [Inject] private SignalBus signalBus;
 
-    [Inject]
-    private void Contruct(SignalBus signalBus, Player.Settings settings)
-    {
-        this._signalBus = signalBus;
-        this._settings = settings;
-    }
-
-    private int currentHealth;
+    private int currentHP;
+    private float regenTimer;
+    private float timeRegeneration;
 
     private void Awake()
     {
-        currentHealth = _settings.MaxHealth;
-        _signalBus.Subscribe<DealDamagePlayer>(OnGetHit);
+        currentHP = player.CurrentStats.MaxHP;
+        signalBus.Subscribe<DealDamagePlayer>(OnGetHit);
+        signalBus.Subscribe<UpdateHPRegeneration>(OnUpdateHPRegeneration);
+        OnUpdateHPRegeneration();
+    }
+
+    private void OnUpdateHPRegeneration()
+    {
+        timeRegeneration = 5f / (1 + ((player.CurrentStats.HPRegeneration - 1) / 2.25f));
+        regenTimer = 0;
     }
 
     private void Start()
     {
-        _signalBus.Fire(new UpdatePlayerHealth()
+        signalBus.Fire(new UpdatePlayerHP()
         {
-            HealthPersent = 1
+            CurrentHP = currentHP,
+            MaxHP = player.CurrentStats.MaxHP
         });
     }
 
     private void OnGetHit(DealDamagePlayer args)
     {
-        if (currentHealth > 0)
-        {
-            Debug.Log(args.Value);
-            currentHealth -= args.Value;
-            if (currentHealth < 0) currentHealth = 0;
+        DeductHP(args.Value);
+    }
 
-            _signalBus.Fire(new UpdatePlayerHealth()
+    private void DeductHP(int value)
+    {
+        if (currentHP < 0) return;  
+        if (currentHP > 0)
+        {
+            currentHP -= CalculateDamageReceivedAfterArmor(value);
+            if (currentHP < 0) currentHP = 0;
+
+            signalBus.Fire(new UpdatePlayerHP()
             {
-                HealthPersent = (float)currentHealth / _settings.MaxHealth
+                CurrentHP = currentHP,
+                MaxHP = player.CurrentStats.MaxHP
             });
+
+            signalBus.Fire<PlayerGetHit>();
+        }
+
+        if (currentHP == 0)
+        {
+            signalBus.Fire<PlayerDie>();
+            Debug.Log("Player Die");
+        }
+    }
+
+    private int CalculateDamageReceivedAfterArmor(int value)
+    {
+        int armor = player.CurrentStats.Armor;
+        float damageReceivedPercent = armor >= 0
+                                         ? 1f / (1f + (armor / 15f))
+                                         : (15f - 2f * armor) / (15f - armor);
+        int damageAfterReduction = (int)Mathf.Round(value * damageReceivedPercent);
+        Debug.Log(damageAfterReduction);
+        return damageAfterReduction;
+    }
+
+    private void PlusHP(int value)
+    {
+        if (currentHP >= player.CurrentStats.MaxHP) return;
+        currentHP = Mathf.Min(currentHP + value, player.CurrentStats.MaxHP);
+        signalBus.Fire(new UpdatePlayerHP()
+        {
+            CurrentHP = currentHP,
+            MaxHP = player.CurrentStats.MaxHP
+        });
+    }
+
+    private void FixedUpdate()
+    {
+        HandleHPRegeneration();
+    }
+
+    private void HandleHPRegeneration()
+    {
+        if (currentHP >= player.CurrentStats.MaxHP || player.CurrentStats.HPRegeneration < 1) return;
+        regenTimer += Time.fixedDeltaTime;
+        if(regenTimer >= timeRegeneration)
+        {
+            regenTimer = 0;
+            PlusHP(1);
         }
     }
 }

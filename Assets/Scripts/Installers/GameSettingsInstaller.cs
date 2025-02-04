@@ -8,7 +8,7 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
     public GameInstaller.Settings GameInstaller;
     public Enemy.Settings Enemy;
     public EnemyManager.Settings EnemyManager;
-    public Player.Settings Player;
+    public Player.Stats PlayerStats;
     public List<Weapon.Settings> Weapons;
 
     public override void InstallBindings()
@@ -16,7 +16,7 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
         Container.BindInstance(GameInstaller);
         Container.BindInstance(Enemy);
         Container.BindInstance(EnemyManager);
-        Container.BindInstance(Player);
+        Container.BindInstance(PlayerStats);
         Container.BindInstance(Weapons);
     }
 }

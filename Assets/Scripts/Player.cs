@@ -1,22 +1,44 @@
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
     [field: SerializeField] public PlayerExperience PlayerExperience;
+    
+    public Stats CurrentStats { get; private set; }
+    private SignalBus signalBus;
 
-    public Vector2 GetPosition() => transform.position;
+    [Inject]
+    private void Construct(SignalBus signalBus, Stats stats)
+    {
+        this.signalBus = signalBus;
+        CurrentStats = stats;
+    }
+
+    public void UpdateMaxHP(int hp)
+    {
+        CurrentStats.MaxHP += hp;
+        if (CurrentStats.MaxHP < 1) CurrentStats.MaxHP = 1;
+    }
+
 
     [System.Serializable]
-    public class Settings //Default Stats
+    public class Stats
     {
-        public int MaxHealth;
-        public float MoveSpeed;
-        public float Might; //Strength
-        public float Area;
-        public float Speed;
-        public float Duration;
-        public float CoolDown;
-        public float Luck;
-        public float CollectExpRange = 1;
+        public int MaxHP = 5;
+        public int HPRegeneration;
+        public int LifeSteal;
+        public float Damage;
+        public int MeleeDamage;
+        public int RangedDamage;
+        public int ElementalDamage;
+        public int AttackSpeed;
+        public int CritChance;
+        public int Range = 2;
+        public int Armor;
+        public int Dodge;
+        public int Speed;
+        public int Luck;
+        public int Harvesting;
     }
 }

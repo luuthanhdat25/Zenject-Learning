@@ -8,8 +8,9 @@ public class Enemy : MonoBehaviour
     private EnemyPool _pool;
     private SignalBus _signalBus;
     private bool hasCollided = false;
+    private bool isMoveable = true;
 
-    [SerializeField] private Rigidbody2D rigidbody2D;
+    [SerializeField] private new Rigidbody2D rigidbody2D;
 
     [Inject]
     public void Construct(Settings settings, Player player, EnemyPool enemyPool, SignalBus signalBus)
@@ -34,16 +35,24 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        _signalBus.Subscribe<PlayerDie>(OnStopMoving);
+    }
+
+    private void OnStopMoving()
+    {
+        isMoveable = false;
+        rigidbody2D.velocity = Vector2.zero;
     }
 
     private void FixedUpdate()
     {
-        MoveTowardsPlayer();
+        HandleMovement();
     }
 
-    private void MoveTowardsPlayer()
+    private void HandleMovement()
     {
-        Vector3 playerPosition = _player.GetPosition();
+        if (!isMoveable) return;
+        Vector3 playerPosition = _player.transform.position;
 
         Vector3 direction = (playerPosition - transform.position).normalized;
         Vector3 currentScale = transform.localScale;

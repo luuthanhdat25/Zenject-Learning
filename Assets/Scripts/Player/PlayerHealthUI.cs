@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,12 +18,12 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void Awake()
     {
-        _signalBus.Subscribe<UpdatePlayerHealth>(UpdateHealthBar);
+        _signalBus.Subscribe<UpdatePlayerHP>(UpdateHealthBar);
     }
 
-    private void UpdateHealthBar(UpdatePlayerHealth args)
+    private void UpdateHealthBar(UpdatePlayerHP args)
     {
-        healthBar.fillAmount = args.HealthPersent;
-        textMesh.text = (args.HealthPersent * 100).ToString();
+        healthBar.fillAmount = (float) args.CurrentHP / args.MaxHP;
+        textMesh.text = $"{args.CurrentHP}/{args.MaxHP}";
     }
 }

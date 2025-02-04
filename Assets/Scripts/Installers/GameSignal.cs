@@ -3,10 +3,14 @@ public class DealDamagePlayer
     public int Value;
 }
 
-public class UpdatePlayerHealth
+public class UpdatePlayerHP
 {
-    public float HealthPersent;
+    public int CurrentHP;
+    public int MaxHP;
 }
+
+public class PlayerGetHit { }
+public class PlayerDie { }
 
 public class UpdatePlayerExperience
 {
@@ -20,3 +24,4 @@ public class UpdatePlayerLevel
     public int NewLevel;
 }
 
+public class UpdateHPRegeneration { }

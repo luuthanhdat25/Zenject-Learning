@@ -1,33 +1,37 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class EnemyManager : IFixedTickable
+public class EnemyManager : IInitializable, IFixedTickable
 {
-    private Border _border;
+    private BorderPoints _border;
     private EnemyPool _enemyPool;
     private Settings _settings;
+    private SignalBus _signalBus;
     private float timer = 0;
+    private bool isSpawn = true;
 
     [Inject]
-    private void Construct(Border border, EnemyPool enemyPool, Settings settings)
+    private void Construct(BorderPoints border, EnemyPool enemyPool, Settings settings, SignalBus signalBus)
     {
         this._border = border;
         this._enemyPool = enemyPool;
         this._settings = settings;
+        this._signalBus = signalBus;
     }
 
-    private void Start()
+    public void Initialize()
     {
         if (_settings.SpawnOnStart)
         {
             timer = _settings.TimeSpawn;
         }
+        _signalBus.Subscribe<PlayerDie>(() => isSpawn = false);
     }
 
     private void SpawnEnemy()
     {
         Enemy enemy = _enemyPool.Spawn(null);
-        enemy.transform.position = _border.GetRandomPositionOnBorder();
+        enemy.transform.position = _border.GetRandomPositionInBorder();
         CountNumberInPool();
     }
 
@@ -45,6 +49,7 @@ public class EnemyManager : IFixedTickable
 
     public void FixedTick()
     {
+        if (!isSpawn) return;
         timer += Time.fixedDeltaTime;
         if(timer >= _settings.TimeSpawn)
         {

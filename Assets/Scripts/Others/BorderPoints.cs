@@ -24,4 +24,11 @@ public class BorderPoints : MonoBehaviour
             || position.x >= xMax 
             || position.x <= xMin;   
     }
+
+    public Vector2 GetRandomPositionInBorder()
+    {
+        float randomX = Random.Range(xMax, xMin);
+        float randomY = Random.Range(yMax, yMin);
+        return new Vector2(randomX, randomY);
+    }
 }

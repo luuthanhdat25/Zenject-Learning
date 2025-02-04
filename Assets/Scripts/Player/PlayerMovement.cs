@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -6,11 +7,33 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerAnimation playerAnimation;
     [SerializeField] private Transform graphicTransform;
     [SerializeField] private new Rigidbody2D rigidbody2D;
-    [SerializeField] private BorderPoints border;
-    [Inject] private Player.Settings _settings;
+    [SerializeField] private float baseModeSpeed = 2;
+    [Inject] private Player player;
+    [Inject] private BorderPoints border;
+    [Inject] private SignalBus signalBus;
 
     private const string INPUT_HORIZONTAL = "Horizontal";
     private const string INPUT_VERTICAL = "Vertical";
+    private float currentMoveSpeed;
+    private bool isMoveable = true;
+
+    private void Awake()
+    {
+        UpdateCurrentSpeed();
+        signalBus.Subscribe<PlayerDie>(OnDie);
+    }
+
+    private void OnDie()
+    {
+        isMoveable = false;
+        rigidbody2D.velocity = Vector2.zero;
+        rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public void UpdateCurrentSpeed()
+    {
+        currentMoveSpeed = baseModeSpeed * (1 + (player.CurrentStats.Speed/100));
+    }
 
     private void FixedUpdate()
     {
@@ -19,13 +42,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        float moveDistance = _settings.MoveSpeed * Time.fixedDeltaTime;
+        if (!isMoveable) return;
+        float moveDistance = currentMoveSpeed * Time.fixedDeltaTime;
         Vector2 moveVector = GetMoveVector(moveDistance);
 
         if (moveVector != Vector2.zero) HandleFlipGraphic(moveVector.x);
 
-        rigidbody2D.velocity = moveVector * _settings.MoveSpeed;
-        playerAnimation.SetIsRunning(moveVector != Vector2.zero, _settings.MoveSpeed);
+        rigidbody2D.velocity = moveVector * currentMoveSpeed;
+        playerAnimation.SetIsRunning(moveVector != Vector2.zero, currentMoveSpeed);
     }
 
     private Vector2 GetMoveVector(float moveDistance)

@@ -4,8 +4,7 @@ using Zenject;
 public class PlayerExperience : MonoBehaviour
 {
     [SerializeField] private CircleCollider2D circleCollider;
-
-    [Inject] private Player.Settings _settings;
+    [SerializeField] private float collectExpRange;
     [Inject] private SignalBus _signalBus;
 
     private int currentExp;
@@ -15,7 +14,7 @@ public class PlayerExperience : MonoBehaviour
     private void Start()
     {
         currentMaxExp = GetMaxExperienceByCurrentLevel(level);
-        circleCollider.radius = _settings.CollectExpRange;
+        circleCollider.radius = collectExpRange;
         _signalBus.Fire(new UpdatePlayerLevel
         {
             NewLevel = level,

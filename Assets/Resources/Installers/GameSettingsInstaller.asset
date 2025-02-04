@@ -15,21 +15,27 @@ MonoBehaviour:
   GameInstaller:
     EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
   Enemy:
-    MoveSpeed: 2
+    MoveSpeed: 1
     Damage: 3
   EnemyManager:
-    TimeSpawn: 1
+    TimeSpawn: 2
     SpawnOnStart: 0
-  Player:
-    MaxHealth: 100
-    MoveSpeed: 5
-    Might: 0
-    Area: 0
+  PlayerStats:
+    MaxHP: 10
+    HPRegeneration: 0
+    LifeSteal: 0
+    Damage: 0
+    MeleeDamage: 0
+    RangedDamage: 0
+    ElementalDamage: 0
+    AttackSpeed: 0
+    CritChance: 0
+    Range: 2
+    Armor: 0
+    Dodge: 0
     Speed: 0
-    Duration: 0
-    CoolDown: 0
     Luck: 0
-    CollectExpRange: 1
+    Harvesting: 0
   Weapons:
   - Name: King Bible
     Icon: {fileID: 0}
