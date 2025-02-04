@@ -21,13 +21,18 @@ public class Player : MonoBehaviour
         if (CurrentStats.MaxHP < 1) CurrentStats.MaxHP = 1;
     }
 
+    public void UpdateDodge(int value)
+    {
+        CurrentStats.Dodge += value;
+        if (CurrentStats.Dodge > 60) CurrentStats.Dodge = 60;
+    }
 
     [System.Serializable]
     public class Stats
     {
         public int MaxHP = 5;
         public int HPRegeneration;
-        public int LifeSteal;
+        public int Lifesteal;
         public float Damage;
         public int MeleeDamage;
         public int RangedDamage;

@@ -2,29 +2,55 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public enum Type
+    {
+        Blade,
+        Elemental,
+        Explosive,
+        Gun,
+        Precise
+    }
+
     [System.Serializable]
     public class Settings 
     {
         [Header("Display Info")]
         public string Name;
         public Sprite Icon;
+        public Weapon Prefab;
+        public Type[] types;
+        public int startTier = 1;
 
         [Header("Stats")]
-        public int MaxLevel;
-        public int BaseDamaage;
-        public float Speed; 
-        public float Duration;
-        public float CoolDown;
-        public float HitboxDelay;
-        public int PoolLimit;
-        public float CritMulti;
-        public float Rarity;
-        public int Amount;
-        public float Area;
-        public int Pierce;
-        public float ProjectileInterval;
-        public float Knockback;
-        public float Chance;
-        public bool BlockByWalls;
+        public LevelStat[] LevelStats;
+    }
+
+    [System.Serializable]
+    public struct LevelStat
+    {
+        public int BaseDamage;
+        public float MeleeDamageBonus;
+        public float RangeDamageBonus;
+        public float ElementalDamageBonus;
+        public float AttackSpeedBonus;
+        public float MaxHPBonus;
+        public float RangeBonus;
+        public float SpeedBonus;
+        public float LuckBonus;
+        public float LevelBonus;
+        public float LifestealBonus;
+        public float ArmorBonus;
+
+        public float AttackSpeeds;
+        public CritChange Cris;
+        public float Range;
+        public int Knockback;
+        public float Lifesteal;
+    }
+
+    public struct CritChange
+    {
+        public float CritRate;
+        public float DamageMultiplier;
     }
 }

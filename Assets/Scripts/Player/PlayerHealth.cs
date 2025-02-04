@@ -35,8 +35,16 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnGetHit(DealDamagePlayer args)
     {
+        if (CanDodge()) return;
         DeductHP(args.Value);
     }
+
+    private bool CanDodge()
+    {
+        float randomValue = Random.Range(0f, 1f);
+        return randomValue < player.CurrentStats.Dodge / 100;
+    }
+
 
     private void DeductHP(int value)
     {
@@ -68,9 +76,7 @@ public class PlayerHealth : MonoBehaviour
         float damageReceivedPercent = armor >= 0
                                          ? 1f / (1f + (armor / 15f))
                                          : (15f - 2f * armor) / (15f - armor);
-        int damageAfterReduction = (int)Mathf.Round(value * damageReceivedPercent);
-        Debug.Log(damageAfterReduction);
-        return damageAfterReduction;
+        return Mathf.RoundToInt(value * damageReceivedPercent);
     }
 
     private void PlusHP(int value)

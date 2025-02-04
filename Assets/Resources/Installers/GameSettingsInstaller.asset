@@ -23,7 +23,7 @@ MonoBehaviour:
   PlayerStats:
     MaxHP: 10
     HPRegeneration: 0
-    LifeSteal: 0
+    Lifesteal: 0
     Damage: 0
     MeleeDamage: 0
     RangedDamage: 0
@@ -37,21 +37,25 @@ MonoBehaviour:
     Luck: 0
     Harvesting: 0
   Weapons:
-  - Name: King Bible
-    Icon: {fileID: 0}
-    MaxLevel: 0
-    BaseDamaage: 0
-    Speed: 0
-    Duration: 0
-    CoolDown: 0
-    HitboxDelay: 0
-    PoolLimit: 0
-    CritMulti: 0
-    Rarity: 0
-    Amount: 0
-    Area: 0
-    Pierce: 0
-    ProjectileInterval: 0
-    Knockback: 0
-    Chance: 0
-    BlockByWalls: 0
+  - Name: Knife
+    Icon: {fileID: 21300000, guid: cfc3e637e1f63a54fb2a697a547d1465, type: 3}
+    Prefab: {fileID: 0}
+    types: 04000000
+    startTier: 1
+    LevelStats:
+    - BaseDamage: 0
+      MeleeDamageBonus: 0
+      RangeDamageBonus: 0
+      ElementalDamageBonus: 0
+      AttackSpeedBonus: 0
+      MaxHPBonus: 0
+      RangeBonus: 0
+      SpeedBonus: 0
+      LuckBonus: 0
+      LevelBonus: 0
+      LifestealBonus: 0
+      ArmorBonus: 0
+      AttackSpeeds: 0
+      Range: 0
+      Knockback: 0
+      Lifesteal: 0
