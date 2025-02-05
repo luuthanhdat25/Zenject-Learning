@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,19 +7,29 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform graphicTransform;
     [SerializeField] private new Rigidbody2D rigidbody2D;
     [SerializeField] private float baseModeSpeed = 2;
-    [Inject] private Player player;
-    [Inject] private BorderPoints border;
-    [Inject] private SignalBus signalBus;
+    private Player _player;
+    private BorderPoints _border;
+    private SignalBus _signalBus;
+    private InputManager _inputManager;
 
-    private const string INPUT_HORIZONTAL = "Horizontal";
-    private const string INPUT_VERTICAL = "Vertical";
+    [Inject]
+    public void Construct(Player player, BorderPoints border, SignalBus signalBus, InputManager inputManager)
+    {
+        _player = player;
+        _border = border;
+        _signalBus = signalBus;
+        _inputManager = inputManager;
+    }
+
+
+
     private float currentMoveSpeed;
     private bool isMoveable = true;
 
     private void Awake()
     {
         UpdateCurrentSpeed();
-        signalBus.Subscribe<PlayerDie>(OnDie);
+        _signalBus.Subscribe<PlayerDie>(OnDie);
     }
 
     private void OnDie()
@@ -32,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateCurrentSpeed()
     {
-        currentMoveSpeed = baseModeSpeed * (1 + (player.CurrentStats.Speed/100));
+        currentMoveSpeed = baseModeSpeed * (1 + (_player.CurrentStats.Speed/100));
     }
 
     private void FixedUpdate()
@@ -54,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 GetMoveVector(float moveDistance)
     {
-        Vector2 moveInput = GetMoveInput();
+        Vector2 moveInput = _inputManager.GetMoveInput();
         if (moveInput == Vector2.zero) return Vector2.zero;
 
         if (!IsNextMoveCrossBorder(moveInput, moveDistance))
@@ -75,18 +84,10 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.zero;
     }
 
-    private Vector2 GetMoveInput()
-    {
-        float moveX = Input.GetAxisRaw(INPUT_HORIZONTAL);
-        float moveY = Input.GetAxisRaw(INPUT_VERTICAL);
-
-        return new Vector2(moveX, moveY);
-    }
-
     private bool IsNextMoveCrossBorder(Vector2 moveDirectionNormalized, float moveDistance)
     {
         Vector2 nextPosition = (Vector2)transform.position + moveDirectionNormalized * moveDistance;
-        return border.IsCrossOverBorder(nextPosition);
+        return _border.IsCrossOverBorder(nextPosition);
     }
 
     private void HandleFlipGraphic(float moveX)
@@ -99,3 +100,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+ 
