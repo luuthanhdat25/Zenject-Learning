@@ -21,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
         _inputManager = inputManager;
     }
 
-
-
     private float currentMoveSpeed;
     private bool isMoveable = true;
 

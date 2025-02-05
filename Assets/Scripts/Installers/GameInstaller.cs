@@ -4,6 +4,7 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     [SerializeField] private BorderPoints border;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private Player playerPrefab;
 
     [Inject] private Settings _settings;
@@ -13,10 +14,10 @@ public class GameInstaller : MonoInstaller
         SignalBusInstaller.Install(Container);
         GameSignalInstaller.Install(Container);
 
-        Container.Bind<InputManager>().AsSingle();
+        Container.Bind<InputManager>().FromComponentOn(inputManager.gameObject).AsSingle().NonLazy();
         Container.Bind<BorderPoints>().FromComponentOn(border.gameObject).AsSingle().NonLazy();
         Container.Bind<Player>().FromComponentOn(playerPrefab.gameObject).AsSingle().NonLazy();
-        //Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
 
         Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(5)
             .FromComponentInNewPrefab(_settings.EnemyPrefab)
