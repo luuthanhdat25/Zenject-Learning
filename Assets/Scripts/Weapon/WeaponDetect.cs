@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class WeaponDetect : MonoBehaviour
 {
-    public Transform NearestTarget { get; private set; }
+    public Transform TargetEnemy { get; private set; }
+    [SerializeField] private CircleCollider2D circleCollider2D;
     
     private List<Transform> targetList = new List<Transform>();
 
@@ -21,7 +22,7 @@ public class WeaponDetect : MonoBehaviour
 
     private void UpdateNearestTarget()
     {
-        NearestTarget = null;
+        TargetEnemy = null;
         if (targetList.Count == 0) return;
         float minDistance = float.MaxValue;
 
@@ -31,8 +32,14 @@ public class WeaponDetect : MonoBehaviour
             if (distance < minDistance)
             {
                 minDistance = distance;
-                NearestTarget = target;
+                TargetEnemy = target;
             }
         }
+    }
+
+    public void SetDetectable(bool value)
+    {
+        circleCollider2D.enabled = value;
+        if (!value) targetList.Clear();
     }
 }

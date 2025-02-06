@@ -32,7 +32,7 @@ public class EnemyManager : IInitializable, IFixedTickable
     {
         Enemy enemy = _enemyPool.Spawn(null);
         enemy.transform.position = _border.GetRandomPositionInBorder();
-        CountNumberInPool();
+        //CountNumberInPool();
     }
 
     private void ClearAll()

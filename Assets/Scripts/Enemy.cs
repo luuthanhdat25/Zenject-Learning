@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private SignalBus _signalBus;
     private bool hasCollided = false;
     private bool isMoveable = true;
+    private int currentHP;
 
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour
         if (collision.GetComponent<Player>() != null)
         {
             hasCollided = true;
-            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.Damage });
+            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
             _pool.Despawn(this);
         }
     }
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         _signalBus.Subscribe<PlayerDie>(OnStopMoving);
+        currentHP = _settings.MaxHP;
     }
 
     private void OnStopMoving()
@@ -64,11 +66,28 @@ public class Enemy : MonoBehaviour
         rigidbody2D.velocity = direction * _settings.MoveSpeed;
     }
 
+    public void DeductHP(int value)
+    {
+        if (currentHP < 0) return;
+        if (currentHP > 0)
+        {
+            currentHP -= value;
+            if (currentHP < 0) currentHP = 0;
+
+            //Got Damage Effect
+        }
+
+        if (currentHP == 0)
+        {
+            _pool.Despawn(this);
+        }
+    }
+
     [System.Serializable]
     public class Settings
     {
         public float MoveSpeed;
-        public int Damage;
+        public int MaxHP = 1;
     }
 
     public void ResetSetting(Settings settings)
@@ -76,6 +95,7 @@ public class Enemy : MonoBehaviour
         hasCollided = false;
         if (settings == null) return;
         _settings = settings;
+        currentHP = settings.MaxHP;
     }
 }
 

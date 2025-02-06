@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BladeStorm : Weapon
+public class BladeStorm : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 5;
     [SerializeField] private Transform bladePrefab;
