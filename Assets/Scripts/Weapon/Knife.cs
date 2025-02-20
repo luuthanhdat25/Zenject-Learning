@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils;
 
 public class Knife : Weapon
 {
@@ -29,7 +30,7 @@ public class Knife : Weapon
         {
             if (!isMoveToTarget)
             {
-                if (MoveToPosition(targetPosition, moveSpeed))
+                if (transform.MoveToPosition(targetPosition, moveSpeed))
                 {
                     isMoveToTarget = true;
                     DealDamage();
@@ -37,7 +38,7 @@ public class Knife : Weapon
             }
             else
             {
-                if (MoveToPosition(_player.WeaponManager.GetFollowPosition(this), moveSpeed))
+                if (transform.MoveToPosition(_player.WeaponManager.GetFollowPosition(this), moveSpeed))
                 {
                     isAttacking = false;
                     isMoveToTarget = false;
@@ -52,22 +53,6 @@ public class Knife : Weapon
         }
 
         weaponDetect.SetDetectable(!isAttacking);
-    }
-
-    private bool MoveToPosition(Vector2 position, float speed)
-    {
-        Vector2 currentPos = transform.position;
-        float distance = Vector2.Distance(currentPos, position);
-        float step = speed * Time.fixedDeltaTime;
-
-        if (distance <= step)
-        {
-            transform.position = position;
-            return true;
-        }
-
-        transform.position = Vector2.MoveTowards(currentPos, position, step);
-        return false;
     }
 
     private void DealDamage()

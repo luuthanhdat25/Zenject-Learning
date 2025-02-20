@@ -3896,6 +3896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerExperience: {fileID: 266848125}
+  WeaponManager: {fileID: 1021400310}
 --- !u!58 &1021400306
 CircleCollider2D:
   m_ObjectHideFlags: 0

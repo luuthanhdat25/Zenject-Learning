@@ -124,8 +124,8 @@ MonoBehaviour:
       Lifesteal: 0
   - Name: Pistol
     Icon: {fileID: 695973850, guid: e468820cf7da8804c8baaafd5347ce19, type: 3}
-    Prefab: {fileID: 1859109076754797531, guid: 1cac49da40d84454e8311b7db5fc2698, type: 3}
-    types: 04000000
+    Prefab: {fileID: -722039793915539582, guid: 98ba9bd2e9c60bb4bace73ca2d5f054a, type: 3}
+    types: 03000000
     TierStats:
     - BaseDamage: 20
       BonusDamage:
@@ -140,7 +140,7 @@ MonoBehaviour:
         Level: 0
         Lifesteal: 0
         Armor: 0
-      AttackSpeed: 0
+      AttackSpeed: 0.87
       Cris:
         CritRate: 50
         DamageMultiplier: 4
@@ -160,7 +160,7 @@ MonoBehaviour:
         Level: 0
         Lifesteal: 0
         Armor: 0
-      AttackSpeed: 0
+      AttackSpeed: 1.03
       Cris:
         CritRate: 40
         DamageMultiplier: 3.5
@@ -180,7 +180,7 @@ MonoBehaviour:
         Level: 0
         Lifesteal: 0
         Armor: 0
-      AttackSpeed: 0
+      AttackSpeed: 1.12
       Cris:
         CritRate: 30
         DamageMultiplier: 3
@@ -200,7 +200,7 @@ MonoBehaviour:
         Level: 0
         Lifesteal: 0
         Armor: 0
-      AttackSpeed: 0
+      AttackSpeed: 1.2
       Cris:
         CritRate: 30
         DamageMultiplier: 3
