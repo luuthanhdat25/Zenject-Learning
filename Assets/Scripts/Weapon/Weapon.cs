@@ -1,3 +1,4 @@
+using Unity.Burst;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -6,32 +7,67 @@ public abstract class Weapon : MonoBehaviour
     
     protected Settings _settings;
     protected InputManager _inputManager;
-    protected int currentLevel;
-    protected PlayerWeaponManager _weaponManager;
+    protected int currentTier;
     protected bool isAttacking = false;
+    protected Player _player;
+    protected int damage;
+    protected CritChange critChange;
+    protected float attackTimer = 0;
 
-    public virtual void Init(Settings settings, PlayerWeaponManager weaponManager, InputManager inputManager)
+    private void Awake()
     {
-        _settings = settings;
-        _inputManager = inputManager;
-        currentLevel = settings.StartTier; 
-        _weaponManager = weaponManager;
+        if(weaponDetect == null)
+        {
+            weaponDetect = GetComponent<WeaponDetect>();
+        }
     }
 
-    public virtual void Init(Settings settings, PlayerWeaponManager weaponManager, InputManager inputManager, int tier)
+    public virtual void Init(Settings settings, Player player, InputManager inputManager, int tier = 0)
     {
         _settings = settings;
         _inputManager = inputManager;
-        _weaponManager = weaponManager;
+        _player = player;
 
-        if (settings.IsValidTier(tier))
+        if (tier == 0) 
         {
-            currentLevel = tier;
+            currentTier = settings.StartTier;
+        }
+        else if (settings.IsValidTier(tier))
+        {
+            currentTier = tier;
         }
         else
         {
             Debug.LogError("Tier invalid!");
         }
+
+        CalculateDamage();
+        attackTimer = GetCurrentAttackSpeed();
+    }
+
+    protected float GetCurrentAttackSpeed()
+    {
+        float attackSpeed = GetCurrentStats().AttackSpeed;
+        if (attackSpeed > 0) return attackSpeed;
+        Debug.LogError($"{nameof(Weapon.TierStat.AttackSpeed)} of weapon {_settings.Name} is not valid!");
+        return -1;
+    }
+
+    public void CalculateDamage()
+    {
+        TierStat currentStats = GetCurrentStats();
+        Player.Stats playerStats = _player.CurrentStats;
+        int damageBonus =
+            Mathf.RoundToInt((playerStats.MeleeDamage * currentStats.BonusDamage.MeleeDamage
+            + playerStats.RangedDamage * currentStats.BonusDamage.RangeDamage
+            + playerStats.ElementalDamage * currentStats.BonusDamage.ElementalDamage
+            + playerStats.Armor * currentStats.BonusDamage.Armor
+            + playerStats.Range * currentStats.BonusDamage.Range
+            + playerStats.AttackSpeed * currentStats.BonusDamage.AttackSpeed
+            + playerStats.Luck * currentStats.BonusDamage.Luck
+            + _player.Level * currentStats.BonusDamage.Level) / 100);
+        damage = currentStats.BaseDamage + damageBonus;
+        critChange = currentStats.Cris;
     }
 
     protected virtual void FixedUpdate()
@@ -57,6 +93,31 @@ public abstract class Weapon : MonoBehaviour
     }
 
     protected abstract void HandleBehaviour();
+
+
+    protected TierStat GetCurrentStats()
+    {
+        return _settings.GetTierStatsByTier(currentTier);
+    }
+
+    protected virtual void DealDamageToEnemy(Enemy enemy)
+    {
+        if (enemy == null) return;
+
+        bool isCrit = IsCritDeal();
+        int damageDealToEnemy = isCrit
+            ? Mathf.RoundToInt(damage * critChange.DamageMultiplier)
+            : damage;
+
+        if (isCrit && damageDealToEnemy == damage) isCrit = false;
+        //Debug.Log($"[{_settings.Name}] Damage Deal: {damageDealToEnemy}, isCrit: {isCrit}");
+        enemy.DeductHP(damageDealToEnemy, isCrit);
+    }
+
+    protected virtual bool IsCritDeal()
+    {
+        return Random.Range(0, 100) < critChange.CritRate;    
+    }
 
     #region Data Config
     public enum Type
@@ -102,7 +163,7 @@ public abstract class Weapon : MonoBehaviour
     {
         public int BaseDamage;
         public BonusDamage BonusDamage;
-        public float AttackSpeeds;
+        public float AttackSpeed;
         public CritChange Cris;
         public float Range;
         public int Knockback;

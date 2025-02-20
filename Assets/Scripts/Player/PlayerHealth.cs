@@ -45,7 +45,6 @@ public class PlayerHealth : MonoBehaviour
         return randomValue < player.CurrentStats.Dodge / 100;
     }
 
-
     private void DeductHP(int value)
     {
         if (currentHP < 0) return;  

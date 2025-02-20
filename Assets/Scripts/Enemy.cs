@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
         rigidbody2D.velocity = direction * _settings.MoveSpeed;
     }
 
-    public void DeductHP(int value)
+    public void DeductHP(int value, bool isCrit)
     {
         if (currentHP < 0) return;
         if (currentHP > 0)
@@ -75,6 +75,7 @@ public class Enemy : MonoBehaviour
             if (currentHP < 0) currentHP = 0;
 
             //Got Damage Effect
+            //Play Crit Effect if isCrit
         }
 
         if (currentHP == 0)

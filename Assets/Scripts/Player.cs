@@ -4,9 +4,11 @@ using Zenject;
 public class Player : MonoBehaviour
 {
     [field: SerializeField] public PlayerExperience PlayerExperience;
+    [field: SerializeField] public PlayerWeaponManager WeaponManager;
     
     public Stats CurrentStats { get; private set; }
     private SignalBus signalBus;
+    public int Level { get; private set; }
 
     [Inject]
     private void Construct(SignalBus signalBus, Stats stats)

@@ -16,7 +16,7 @@ MonoBehaviour:
     EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
   Enemy:
     MoveSpeed: 1
-    MaxHP: 4
+    MaxHP: 3
   EnemyManager:
     TimeSpawn: 0.5
     SpawnOnStart: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
     HPRegeneration: 0
     Lifesteal: 0
     Damage: 0
-    MeleeDamage: 0
+    MeleeDamage: 10
     RangedDamage: 0
     ElementalDamage: 0
     AttackSpeed: 0
@@ -42,9 +42,29 @@ MonoBehaviour:
     Prefab: {fileID: 1859109076754797531, guid: 1cac49da40d84454e8311b7db5fc2698, type: 3}
     types: 04000000
     TierStats:
-    - BaseDamage: 2
+    - BaseDamage: 20
       BonusDamage:
-        MeleeDamage: 0
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0.78
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0
+      Cris:
+        CritRate: 50
+        DamageMultiplier: 4
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 12
+      BonusDamage:
+        MeleeDamage: 80
         RangeDamage: 0
         ElementalDamage: 0
         AttackSpeed: 0
@@ -55,10 +75,135 @@ MonoBehaviour:
         Level: 0
         Lifesteal: 0
         Armor: 0
-      AttackSpeeds: 0
+      AttackSpeed: 0.86
       Cris:
-        CritRate: 0
-        DamageMultiplier: 0
-      Range: 0
-      Knockback: 0
+        CritRate: 40
+        DamageMultiplier: 3.5
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 8
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0.93
+      Cris:
+        CritRate: 30
+        DamageMultiplier: 3
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 6
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 1.01
+      Cris:
+        CritRate: 30
+        DamageMultiplier: 3
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+  - Name: Pistol
+    Icon: {fileID: 695973850, guid: e468820cf7da8804c8baaafd5347ce19, type: 3}
+    Prefab: {fileID: 1859109076754797531, guid: 1cac49da40d84454e8311b7db5fc2698, type: 3}
+    types: 04000000
+    TierStats:
+    - BaseDamage: 20
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0
+      Cris:
+        CritRate: 50
+        DamageMultiplier: 4
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 12
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0
+      Cris:
+        CritRate: 40
+        DamageMultiplier: 3.5
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 8
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0
+      Cris:
+        CritRate: 30
+        DamageMultiplier: 3
+      Range: 150
+      Knockback: 2
+      Lifesteal: 0
+    - BaseDamage: 6
+      BonusDamage:
+        MeleeDamage: 80
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 0
+      Cris:
+        CritRate: 30
+        DamageMultiplier: 3
+      Range: 150
+      Knockback: 2
       Lifesteal: 0

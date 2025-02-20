@@ -10,12 +10,14 @@ public class PlayerWeaponManager : MonoBehaviour
     private Dictionary<Weapon, Vector2> weaponDic = new ();
     private DataManager _dataManager;
     private InputManager _inputManager;
+    private Player _player;
 
     [Inject]
-    public void Construct(DataManager dataManager, InputManager inputManager)
+    public void Construct(DataManager dataManager, InputManager inputManager, Player player)
     {
         _dataManager = dataManager;
         _inputManager = inputManager;
+        _player = player;
     }
 
     private void Start()
@@ -42,7 +44,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private Weapon Spawn(Weapon.Settings data)
     {
         Weapon newWeapon = Instantiate(data.Prefab);
-        newWeapon.Init(data, this, _inputManager);
+        newWeapon.Init(data, _player, _inputManager);
         weaponDic.Add(newWeapon, Vector2.zero);
         return newWeapon;
     }

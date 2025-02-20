@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Knife : Weapon
@@ -17,13 +14,18 @@ public class Knife : Weapon
     {
         var enemy = weaponDetect.TargetEnemy;
 
-        if (enemy != null && !isAttacking)
+        if (!isAttacking)
         {
-            isAttacking = true;
-            RotateFollowTargetEnemy(enemy.transform);
-            targetPosition = enemy.position;
+            attackTimer += Time.fixedDeltaTime;
+            if(enemy != null && attackTimer >= GetCurrentAttackSpeed())
+            {
+                isAttacking = true;
+                RotateFollowTargetEnemy(enemy.transform);
+                targetPosition = enemy.position;
+                attackTimer = 0;
+            }
         }
-        else if (isAttacking)
+        else 
         {
             if (!isMoveToTarget)
             {
@@ -35,7 +37,7 @@ public class Knife : Weapon
             }
             else
             {
-                if (MoveToPosition(_weaponManager.GetFollowPosition(this), moveSpeed))
+                if (MoveToPosition(_player.WeaponManager.GetFollowPosition(this), moveSpeed))
                 {
                     isAttacking = false;
                     isMoveToTarget = false;
@@ -46,7 +48,7 @@ public class Knife : Weapon
         if (!isAttacking)
         {
             RotateFollowInputDirection();
-            transform.position = _weaponManager.GetFollowPosition(this);
+            transform.position = _player.WeaponManager.GetFollowPosition(this);
         }
 
         weaponDetect.SetDetectable(!isAttacking);
@@ -71,19 +73,17 @@ public class Knife : Weapon
     private void DealDamage()
     {
         Vector2 damagePosition = (Vector2)damagePoint.position;
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(damagePosition, damageRadius, enemyLayerMask);
+        Collider2D hitEnemies = Physics2D.OverlapCircle(damagePosition, damageRadius, enemyLayerMask);
 
-        Collider2D firstEnemyHit = hitEnemies.FirstOrDefault();
-        if(firstEnemyHit != null)
+        if(hitEnemies != null)
         {
-            if (firstEnemyHit.TryGetComponent(out Enemy e))
+            if (hitEnemies.TryGetComponent(out Enemy e))
             {
-                e.DeductHP(_settings.GetTierStatsByTier(currentLevel).BaseDamage);
+                DealDamageToEnemy(e);
             }
         }
     }
 
-    
     private void OnDrawGizmos()
     {
         if (damagePoint == null) return;
