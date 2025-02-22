@@ -1,4 +1,3 @@
-using Unity.Burst;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -70,11 +69,6 @@ public abstract class Weapon : MonoBehaviour
         critChange = currentStats.Cris;
     }
 
-    protected virtual void FixedUpdate()
-    {
-        HandleBehaviour();
-    }
-    
     protected virtual void RotateFollowInputDirection()
     {
         RotateToTargetDirection(_inputManager.GetMoveInput());
@@ -91,14 +85,11 @@ public abstract class Weapon : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direciton.y, direciton.x) * Mathf.Rad2Deg);
     }
+    protected virtual void FixedUpdate() => HandleBehaviour();
 
     protected abstract void HandleBehaviour();
 
-
-    protected TierStat GetCurrentStats()
-    {
-        return _settings.GetTierStatsByTier(currentTier);
-    }
+    protected TierStat GetCurrentStats() => _settings.GetTierStatsByTier(currentTier);
 
     protected virtual void DealDamageToEnemy(Enemy enemy)
     {
@@ -114,10 +105,7 @@ public abstract class Weapon : MonoBehaviour
         enemy.DeductHP(damageDealToEnemy, isCrit);
     }
 
-    protected virtual bool IsCritDeal()
-    {
-        return Random.Range(0, 100) < critChange.CritRate;    
-    }
+    protected virtual bool IsCritDeal() => Random.Range(0, 100) < critChange.CritRate;
 
     #region Data Config
     public enum Type

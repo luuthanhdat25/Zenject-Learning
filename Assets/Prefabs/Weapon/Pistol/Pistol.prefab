@@ -97,7 +97,36 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5370820315931870058, guid: af9385c2e73c1924daa64c6680b11540, type: 3}
       insertIndex: -1
       addedObject: {fileID: -722039793915539582}
+    - targetCorrespondingSourceObject: {fileID: 5605250576957815743, guid: af9385c2e73c1924daa64c6680b11540, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3090567761325178281}
   m_SourcePrefab: {fileID: 100100000, guid: af9385c2e73c1924daa64c6680b11540, type: 3}
+--- !u!1 &1801134782604840370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5605250576957815743, guid: af9385c2e73c1924daa64c6680b11540, type: 3}
+  m_PrefabInstance: {fileID: 6140432937140401677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3090567761325178281
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801134782604840370}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d98045ba81ed4494eb0bdfde92a22f73, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2287775447780341095 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5370820315931870058, guid: af9385c2e73c1924daa64c6680b11540, type: 3}
@@ -117,8 +146,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDetect: {fileID: 4261918432994013940}
   shootingPoint: {fileID: 5841336230627864220}
-  animator: {fileID: 0}
+  animator: {fileID: 3090567761325178281}
   bulletPrefab: {fileID: 5546463545511459812, guid: b736d36999101a1488eac7a2b53abb8e, type: 3}
+  shootClip: {fileID: 7400000, guid: 58b1d9dd1cfe8ef47b737de2aeb33aec, type: 2}
 --- !u!114 &4261918432994013940 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7931493165650969849, guid: af9385c2e73c1924daa64c6680b11540, type: 3}

@@ -5,37 +5,57 @@ public class Pistol : Weapon
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Animator animator;
     [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] private AnimationClip shootClip;
+
+    private float shootAnimationTime;
+
+    private void Awake()
+    {
+        shootAnimationTime = shootClip.length;
+    }
+
+    private enum AnimationParam
+    {
+        AttackingMultiplier,
+        AttackTrigger
+    }
 
     protected override void HandleBehaviour()
     {
         var enemy = weaponDetect.TargetEnemy;
 
-        if (!isAttacking)
+        attackTimer += Time.fixedDeltaTime;
+        if (enemy != null)
         {
-            attackTimer += Time.fixedDeltaTime;
-            if (enemy != null && attackTimer >= GetCurrentAttackSpeed())
+            float currentAttackSpeed = GetCurrentAttackSpeed();
+            if(attackTimer >= currentAttackSpeed)
             {
-                isAttacking = true;
-                RotateFollowTargetEnemy(enemy.transform);
-                Bullet bullet = Instantiate(bulletPrefab);
-                bullet.transform.position = shootingPoint.position;
-                bullet.Init(enemy.position, GetCurrentStats().Range);
                 attackTimer = 0;
+                RotateFollowTargetEnemy(enemy.transform);
+                SpawnBullet(enemy);
+                PlayShootAnimation(currentAttackSpeed);
             }
-        }
-        else
+        } 
+        else 
         {
-            isAttacking = false;
+            RotateFollowInputDirection();
         }
 
-        if (!isAttacking)
-        {
-            //RotateFollowInputDirection();
-        }
         transform.position = _player.WeaponManager.GetFollowPosition(this);
-
-        //weaponDetect.SetDetectable(!isAttacking);
     }
 
-    public Vector3 ShootingPosition() => shootingPoint.position;
+    private void SpawnBullet(Transform enemy)
+    {
+        Bullet bullet = Instantiate(bulletPrefab);
+        bullet.transform.position = shootingPoint.position;
+        bullet.Init(enemy.position, GetCurrentStats().Range, DealDamageToEnemy);
+    }
+
+    private void PlayShootAnimation(float attackSpeed)
+    {
+        float multiplier = shootAnimationTime / attackSpeed;
+        multiplier = multiplier > 1 ? multiplier : 1; // Shoot animation shouldn't slower default speed
+        animator.SetFloat(AnimationParam.AttackingMultiplier.ToString(), multiplier);
+        animator.SetTrigger(AnimationParam.AttackTrigger.ToString());
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,13 +12,19 @@ public class PlayerWeaponManager : MonoBehaviour
     private DataManager _dataManager;
     private InputManager _inputManager;
     private Player _player;
+    private SignalBus _signalBus;
 
     [Inject]
-    public void Construct(DataManager dataManager, InputManager inputManager, Player player)
+    public void Construct
+        (DataManager dataManager, 
+        InputManager inputManager, 
+        Player player,
+        SignalBus signalBus)
     {
         _dataManager = dataManager;
         _inputManager = inputManager;
         _player = player;
+        _signalBus = signalBus;
     }
 
     private void Start()
@@ -39,6 +46,8 @@ public class PlayerWeaponManager : MonoBehaviour
             key.gameObject.SetActive(true);
             startRotation += gapRadius;
         }
+
+        _signalBus.Subscribe<PlayerDie>(DestroyAllWeapons);
     }
 
     private Weapon Spawn(Weapon.Settings data)
@@ -57,6 +66,15 @@ public class PlayerWeaponManager : MonoBehaviour
         float y = radius * Mathf.Sin(angle);
 
         return new Vector2(x, y);
+    }
+
+    private void DestroyAllWeapons()
+    {
+        foreach (var item in weaponDic)
+        {
+            Destroy(item.Key.gameObject);
+        }
+        weaponDic.Clear();
     }
 
     public Vector2 GetFollowPosition(Weapon e) => weaponDic[e] + (Vector2)transform.position;

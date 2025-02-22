@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Utils;
 
 public class Bullet : MonoBehaviour
@@ -6,11 +7,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float moveSpeed = 15f;
 
     private Vector2 targetPosition;
-
-    public void Init(Vector2 targetPosition, float range)
+    private Action<Enemy> onDealDamage;
+    public void Init(Vector2 targetPosition, float range, Action<Enemy> onDealDamage)
     {
         this.targetPosition = targetPosition;
-        transform.RotateLootAt(targetPosition); 
+        transform.RotateLootAt(targetPosition);
+        this.onDealDamage = onDealDamage;
     }
 
     private void FixedUpdate()
@@ -26,17 +28,16 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    //Instantiate(gunShoot.ImpactParticle, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
-    //    //Instantiate(gunShoot.DecalParticle, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
-
-        
-    //}
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Bullet hit!");
-        Destroy(gameObject);
+        if (collision.TryGetComponent(out Enemy e))
+        {
+            Debug.Log("Bullet hit!");
+            onDealDamage(e);
+            //Instantiate(gunShoot.ImpactParticle, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
+            //Play hit vfx
+            //Play sfx 
+            Destroy(gameObject);
+        }
     }
 }
