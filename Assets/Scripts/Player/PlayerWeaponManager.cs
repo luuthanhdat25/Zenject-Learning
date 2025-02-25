@@ -30,7 +30,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private void Start()
     {
         Spawn(_dataManager.GetWeaponDatas()[1]);
-        //Spawn(_dataManager.GetWeaponDatas().First());
+        Spawn(_dataManager.GetWeaponDatas().First());
         //Spawn(_dataManager.GetWeaponDatas().First());
         //Spawn(_dataManager.GetWeaponDatas().First());
         float gapRadius = (float)360 / weaponDic.Count;

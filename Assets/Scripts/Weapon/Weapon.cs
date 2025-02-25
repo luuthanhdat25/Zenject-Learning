@@ -39,8 +39,8 @@ public abstract class Weapon : MonoBehaviour
         {
             Debug.LogError("Tier invalid!");
         }
-
         CalculateDamage();
+        UpdateRange();
         attackTimer = GetCurrentAttackSpeed();
     }
 
@@ -67,6 +67,11 @@ public abstract class Weapon : MonoBehaviour
             + _player.Level * currentStats.BonusDamage.Level) / 100);
         damage = currentStats.BaseDamage + damageBonus;
         critChange = currentStats.Cris;
+    }
+
+    protected virtual void UpdateRange()
+    {
+        weaponDetect.SetRange(GetCurrentStats().Range + _player.CurrentStats.Range);
     }
 
     protected virtual void RotateFollowInputDirection()

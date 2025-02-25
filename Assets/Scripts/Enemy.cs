@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -40,15 +39,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!enemyHasCollided.Contains(collision) && collision.gameObject.GetComponent<Player>() != null)
-        {
-            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
-            _pool.Despawn(this);
-        }
-    }
-*/
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
