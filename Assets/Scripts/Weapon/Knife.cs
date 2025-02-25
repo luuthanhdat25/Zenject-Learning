@@ -18,13 +18,16 @@ public class Knife : Weapon
         if (!isAttacking)
         {
             attackTimer += Time.fixedDeltaTime;
-            if(enemy != null && attackTimer >= GetCurrentAttackSpeed())
+            if(enemy != null)
             {
-                isAttacking = true;
-                RotateFollowTargetEnemy(enemy.transform);
-                targetPosition = enemy.position;
-                attackTimer = 0;
-            }
+                RotateFollowTargetEnemy(enemy);
+                if(attackTimer >= GetCurrentAttackSpeed())
+                {
+                    isAttacking = true;
+                    targetPosition = enemy.position;
+                    attackTimer = 0;
+                }
+            } 
         }
         else 
         {
@@ -48,7 +51,7 @@ public class Knife : Weapon
 
         if (!isAttacking)
         {
-            RotateFollowInputDirection();
+            if(enemy == null) RotateFollowInputDirection();
             transform.position = _player.WeaponManager.GetFollowPosition(this);
         }
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -7,9 +9,9 @@ public class Enemy : MonoBehaviour
     private Settings _settings;
     private EnemyPool _pool;
     private SignalBus _signalBus;
-    private bool hasCollided = false;
     private bool isMoveable = true;
     private int currentHP;
+    private HashSet<Collision2D> enemyHasCollided = new ();
 
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
@@ -22,17 +24,31 @@ public class Enemy : MonoBehaviour
         _signalBus = signalBus;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (hasCollided) return;
-        if (collision.GetComponent<Player>() != null)
+        if (!enemyHasCollided.Contains(collision))
         {
-            hasCollided = true;
+            if(collision.gameObject.GetComponent<Player>() != null)
+            {
+                _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
+                _pool.Despawn(this);
+            }
+            else
+            {
+                enemyHasCollided.Add(collision);
+            }
+        }
+    }
+
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!enemyHasCollided.Contains(collision) && collision.gameObject.GetComponent<Player>() != null)
+        {
             _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
             _pool.Despawn(this);
         }
     }
-
+*/
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -93,7 +109,6 @@ public class Enemy : MonoBehaviour
 
     public void ResetSetting(Settings settings)
     {
-        hasCollided = false;
         if (settings == null) return;
         _settings = settings;
         currentHP = settings.MaxHP;

@@ -27,11 +27,12 @@ public class Pistol : Weapon
         attackTimer += Time.fixedDeltaTime;
         if (enemy != null)
         {
+            RotateFollowTargetEnemy(enemy.transform);
+            
             float currentAttackSpeed = GetCurrentAttackSpeed();
             if(attackTimer >= currentAttackSpeed)
             {
                 attackTimer = 0;
-                RotateFollowTargetEnemy(enemy.transform);
                 SpawnBullet(enemy);
                 PlayShootAnimation(currentAttackSpeed);
             }
