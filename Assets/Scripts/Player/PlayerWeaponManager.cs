@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +6,8 @@ using Zenject;
 public class PlayerWeaponManager : MonoBehaviour
 {
     [SerializeField] private float radius = .5f;
-
+    [SerializeField] private string[] weaponsStart;
+    
     private Dictionary<Weapon, Vector2> weaponDic = new ();
     private DataManager _dataManager;
     private InputManager _inputManager;
@@ -29,10 +29,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
-        Spawn(_dataManager.GetWeaponDatas()[1]);
-        Spawn(_dataManager.GetWeaponDatas().First());
-        //Spawn(_dataManager.GetWeaponDatas().First());
-        //Spawn(_dataManager.GetWeaponDatas().First());
+        foreach (var weaponName in weaponsStart)
+        {
+            Weapon.Settings weaponData = _dataManager.GetWeaponDatas().FirstOrDefault(w => w.Name == weaponName);
+            if(weaponData != null)
+            {
+                Spawn(weaponData);
+            }
+        }
         float gapRadius = (float)360 / weaponDic.Count;
         float startRotation = 90;
 

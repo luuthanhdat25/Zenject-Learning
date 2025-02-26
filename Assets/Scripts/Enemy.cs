@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private SignalBus _signalBus;
     private bool isMoveable = true;
     private int currentHP;
-    private HashSet<Collision2D> enemyHasCollided = new ();
+    private bool isDespawned = false;
 
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
@@ -25,17 +25,12 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!enemyHasCollided.Contains(collision))
+        if (collision.gameObject == _player.gameObject && !isDespawned)
         {
-            if(collision.gameObject.GetComponent<Player>() != null)
-            {
-                _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
-                _pool.Despawn(this);
-            }
-            else
-            {
-                enemyHasCollided.Add(collision);
-            }
+            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
+            //Apply Damage To player
+            isDespawned = true;
+            _pool.Despawn(this);
         }
     }
 
@@ -72,7 +67,14 @@ public class Enemy : MonoBehaviour
         rigidbody2D.velocity = direction * _settings.MoveSpeed;
     }
 
-    public void DeductHP(int value, bool isCrit)
+    /// <summary>
+    /// Deducts HP by a given value, applying damage effects and handling critical hits.
+    /// Despawns the object and removes it from the weapon's target list if HP reaches zero.
+    /// </summary>
+    /// <param name="value">The amount of HP to deduct.</param>
+    /// <param name="isCrit">Indicates if the hit is critical.</param>
+    /// <param name="weaponDetect">The weapon detection system to update target status.</param>
+    public void DeductHP(int value, bool isCrit, WeaponDetect weaponDetect)
     {
         if (currentHP < 0) return;
         if (currentHP > 0)
@@ -84,8 +86,10 @@ public class Enemy : MonoBehaviour
             //Play Crit Effect if isCrit
         }
 
-        if (currentHP == 0)
+        if (currentHP == 0 && !isDespawned)
         {
+            weaponDetect.RemoveTarget(this.transform);
+            isDespawned = true;
             _pool.Despawn(this);
         }
     }
@@ -102,9 +106,9 @@ public class Enemy : MonoBehaviour
         if (settings == null) return;
         _settings = settings;
         currentHP = settings.MaxHP;
+        isDespawned = false;
     }
 }
-
 
 public class EnemyPool : MonoMemoryPool<Enemy.Settings, Enemy>
 {

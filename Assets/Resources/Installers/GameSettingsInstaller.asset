@@ -30,7 +30,7 @@ MonoBehaviour:
     ElementalDamage: 0
     AttackSpeed: 0
     CritChance: 0
-    Range: 50
+    Range: 100
     Armor: 0
     Dodge: 0
     Speed: 0
@@ -127,10 +127,10 @@ MonoBehaviour:
     Prefab: {fileID: -722039793915539582, guid: 98ba9bd2e9c60bb4bace73ca2d5f054a, type: 3}
     types: 03000000
     TierStats:
-    - BaseDamage: 20
+    - BaseDamage: 50
       BonusDamage:
-        MeleeDamage: 80
-        RangeDamage: 0
+        MeleeDamage: 0
+        RangeDamage: 100
         ElementalDamage: 0
         AttackSpeed: 0
         MaxHP: 0
@@ -142,15 +142,15 @@ MonoBehaviour:
         Armor: 0
       AttackSpeed: 0.87
       Cris:
-        CritRate: 50
-        DamageMultiplier: 4
-      Range: 150
-      Knockback: 2
+        CritRate: 10
+        DamageMultiplier: 2
+      Range: 400
+      Knockback: 15
       Lifesteal: 0
-    - BaseDamage: 12
+    - BaseDamage: 30
       BonusDamage:
-        MeleeDamage: 80
-        RangeDamage: 0
+        MeleeDamage: 0
+        RangeDamage: 100
         ElementalDamage: 0
         AttackSpeed: 0
         MaxHP: 0
@@ -162,15 +162,15 @@ MonoBehaviour:
         Armor: 0
       AttackSpeed: 1.03
       Cris:
-        CritRate: 40
-        DamageMultiplier: 3.5
-      Range: 150
-      Knockback: 2
+        CritRate: 10
+        DamageMultiplier: 2
+      Range: 400
+      Knockback: 15
       Lifesteal: 0
-    - BaseDamage: 8
+    - BaseDamage: 20
       BonusDamage:
-        MeleeDamage: 80
-        RangeDamage: 0
+        MeleeDamage: 0
+        RangeDamage: 100
         ElementalDamage: 0
         AttackSpeed: 0
         MaxHP: 0
@@ -182,15 +182,15 @@ MonoBehaviour:
         Armor: 0
       AttackSpeed: 1.12
       Cris:
-        CritRate: 30
-        DamageMultiplier: 3
-      Range: 150
-      Knockback: 2
+        CritRate: 10
+        DamageMultiplier: 2
+      Range: 400
+      Knockback: 15
       Lifesteal: 0
-    - BaseDamage: 6
+    - BaseDamage: 12
       BonusDamage:
-        MeleeDamage: 80
-        RangeDamage: 0
+        MeleeDamage: 0
+        RangeDamage: 100
         ElementalDamage: 0
         AttackSpeed: 0
         MaxHP: 0
@@ -202,8 +202,73 @@ MonoBehaviour:
         Armor: 0
       AttackSpeed: 1.2
       Cris:
-        CritRate: 30
-        DamageMultiplier: 3
-      Range: 150
-      Knockback: 2
+        CritRate: 5
+        DamageMultiplier: 2
+      Range: 400
+      Knockback: 15
+      Lifesteal: 0
+  - Name: Hammer
+    Icon: {fileID: 21300000, guid: efce5fb03eb1fdd43abe45d949f7210b, type: 3}
+    Prefab: {fileID: 1258207665468570509, guid: cc5d24fd7c7ac5d4fb2483ba91c57131, type: 3}
+    types: 04000000
+    TierStats:
+    - BaseDamage: 110
+      BonusDamage:
+        MeleeDamage: 200
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 1.5
+      Cris:
+        CritRate: 3
+        DamageMultiplier: 1.75
+      Range: 175
+      Knockback: 50
+      Lifesteal: 0
+    - BaseDamage: 70
+      BonusDamage:
+        MeleeDamage: 175
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 1.59
+      Cris:
+        CritRate: 3
+        DamageMultiplier: 1.75
+      Range: 175
+      Knockback: 40
+      Lifesteal: 0
+    - BaseDamage: 35
+      BonusDamage:
+        MeleeDamage: 150
+        RangeDamage: 0
+        ElementalDamage: 0
+        AttackSpeed: 0
+        MaxHP: 0
+        Range: 0
+        Speed: 0
+        Luck: 0
+        Level: 0
+        Lifesteal: 0
+        Armor: 0
+      AttackSpeed: 1.67
+      Cris:
+        CritRate: 3
+        DamageMultiplier: 1.75
+      Range: 175
+      Knockback: 30
       Lifesteal: 0

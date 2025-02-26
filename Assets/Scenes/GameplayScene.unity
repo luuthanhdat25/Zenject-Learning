@@ -880,7 +880,7 @@ Camera:
   far clip plane: 20
   field of view: 60
   orthographic: 1
-  orthographic size: 4.5
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4000,6 +4000,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
+  weaponsStart:
+  - Hammer
+  - Hammer
+  - Hammer
+  - Hammer
 --- !u!1 &1030108464
 GameObject:
   m_ObjectHideFlags: 0
@@ -4253,7 +4258,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1021400304}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4.5
+    OrthographicSize: 5.5
     NearClipPlane: 0.3
     FarClipPlane: 20
     Dutch: 0
