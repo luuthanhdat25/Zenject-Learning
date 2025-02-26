@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ public class Enemy : MonoBehaviour
     private SignalBus _signalBus;
     private bool isMoveable = true;
     private int currentHP;
-    private bool isDespawned = false;
+    public bool IsDespawned = false;
 
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
@@ -25,11 +24,11 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject == _player.gameObject && !isDespawned)
+        if (collision.gameObject == _player.gameObject && !IsDespawned)
         {
-            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.MaxHP });
+            _signalBus.Fire(new DealDamagePlayer() { Value = currentHP });
             //Apply Damage To player
-            isDespawned = true;
+            IsDespawned = true;
             _pool.Despawn(this);
         }
     }
@@ -86,10 +85,10 @@ public class Enemy : MonoBehaviour
             //Play Crit Effect if isCrit
         }
 
-        if (currentHP == 0 && !isDespawned)
+        if (currentHP == 0 && !IsDespawned)
         {
             weaponDetect.RemoveTarget(this.transform);
-            isDespawned = true;
+            IsDespawned = true;
             _pool.Despawn(this);
         }
     }
@@ -101,19 +100,19 @@ public class Enemy : MonoBehaviour
         public int MaxHP = 1;
     }
 
-    public void ResetSetting(Settings settings)
+    public void ResetSetting()
     {
-        if (settings == null) return;
-        _settings = settings;
-        currentHP = settings.MaxHP;
-        isDespawned = false;
+        currentHP = _settings.MaxHP;
+        isMoveable = true;
+        IsDespawned = false;
     }
 }
 
 public class EnemyPool : MonoMemoryPool<Enemy.Settings, Enemy>
 {
-    protected override void Reinitialize(Enemy.Settings settings, Enemy enemy)
+    protected override void OnSpawned(Enemy item)
     {
-        enemy.ResetSetting(settings);
+        base.OnSpawned(item);
+        item.ResetSetting();
     }
 }

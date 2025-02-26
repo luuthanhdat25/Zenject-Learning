@@ -18,10 +18,9 @@ public class GameInstaller : MonoInstaller
         Container.Bind<InputManager>().FromComponentOn(inputManager.gameObject).AsSingle().NonLazy();
         Container.Bind<DataManager>().FromComponentOn(dataManager.gameObject).AsSingle().NonLazy();
         Container.Bind<BorderPoints>().FromComponentOn(border.gameObject).AsSingle().NonLazy();
-        Container.Bind<Player>().FromComponentOn(playerPrefab.gameObject).AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
 
-        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(5)
+        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(10)
             .FromComponentInNewPrefab(_settings.EnemyPrefab)
             .UnderTransformGroup("EnemyPool");
     }
