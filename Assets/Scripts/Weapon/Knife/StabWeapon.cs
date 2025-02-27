@@ -1,7 +1,7 @@
 using UnityEngine;
 using Utils;
 
-public class Knife : Weapon
+public class StabWeapon : Weapon
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] protected LayerMask enemyLayerMask;

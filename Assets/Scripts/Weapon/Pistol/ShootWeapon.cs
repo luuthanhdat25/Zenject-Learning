@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Pistol : Weapon
+public class ShootWeapon : Weapon
 {
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Animator animator;

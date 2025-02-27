@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
-public class Hammer : Weapon
+public class SwingWeapon : Weapon
 {
     [SerializeField] private float swingSpeed = 200f;
     [SerializeField] private float moveToSwing = 10f;
@@ -36,16 +33,20 @@ public class Hammer : Weapon
                 RotateFollowTargetEnemy(enemy);
                 if (attackTimer >= GetCurrentAttackSpeed())
                 {
-                    isAttacking = true;
                     Vector2 swingDirection = enemy.position - transform.position;
-                    targetsInSwing = weaponDetect.GetTargetsInConeAndTargetFarest(swingDirection, swingAngle, out Transform targetFarest);
+                    targetsInSwing = weaponDetect.GetTargetsInCone(swingDirection, swingAngle);
+                    float longestDistance = LongestTargetDistance(targetsInSwing);
                     
-                    float startAngle = transform.eulerAngles.z + swingAngle/2;
-                    centerPoint = transform.position;
-                    startSwingPosition = transform.position + Quaternion.Euler(0, 0, startAngle) * Vector3.right * Vector2.Distance(transform.position, targetFarest.position);
-                    RotateToTargetDirection(Quaternion.Euler(0, 0, startAngle) * Vector3.right);
-                    
-                    attackTimer = 0;
+                    if(longestDistance > 0)
+                    {
+                        isAttacking = true;
+                        attackTimer = 0;
+                        
+                        float startAngle = transform.eulerAngles.z + swingAngle/2;
+                        centerPoint = transform.position;
+                        startSwingPosition = transform.position + Quaternion.Euler(0, 0, startAngle) * Vector3.right * longestDistance;
+                        RotateToTargetDirection(Quaternion.Euler(0, 0, startAngle) * Vector3.right);
+                    }
                 }
             }
         }
@@ -89,6 +90,18 @@ public class Hammer : Weapon
         }
 
         weaponDetect.SetDetectable(!isAttacking);
+    }
+
+    private float LongestTargetDistance(List<Transform> targets)
+    {
+        if(targets == null || targets.Count == 0) return -1;
+        
+        float longestDistance = float.MinValue;
+        foreach (var item in targets)
+        {
+            longestDistance = Mathf.Max(longestDistance, Vector2.Distance(transform.position, item.position)); 
+        }
+        return longestDistance;
     }
 
     private void DealDamage()

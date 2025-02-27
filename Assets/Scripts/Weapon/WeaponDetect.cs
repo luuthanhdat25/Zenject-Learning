@@ -45,14 +45,12 @@ public class WeaponDetect : MonoBehaviour
         targetList.Remove(target);
     }
 
-    public List<Transform> GetTargetsInConeAndTargetFarest(Vector2 coneDirection, float coneRadius, out Transform targetFarest)
+    public List<Transform> GetTargetsInCone(Vector2 coneDirection, float coneRadius)
     {
         List<Transform> targetList = new ();
-        targetFarest = null;
         if (this.targetList.Count == 0) return targetList;
 
         float validAngle = coneRadius / 2;
-        float farestDistance = 0;
         foreach (var target in this.targetList)
         {
             Vector2 directionToEnemy = target.position - transform.position;
@@ -61,19 +59,6 @@ public class WeaponDetect : MonoBehaviour
             if(angleGap <= validAngle)
             {
                 targetList.Add(target);
-                if(targetFarest == null)
-                {
-                    targetFarest = target;
-                    farestDistance = Vector2.Distance(target.position, transform.position);
-                }else
-                {
-                    float newDistance = directionToEnemy.magnitude;
-                    if (newDistance > farestDistance)
-                    {
-                        targetFarest = target;
-                        farestDistance = newDistance;
-                    }
-                }
             }
         }
         return targetList;
