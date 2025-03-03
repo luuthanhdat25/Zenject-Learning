@@ -9,7 +9,13 @@ public class StabWeapon : Weapon
     [SerializeField] protected float damageRadius = 0.5f;
 
     private Vector2 targetPosition;
-    private bool isMoveToTarget = false;
+    private State attackState = State.MoveToTargetPosition;
+
+    private enum State
+    {
+        MoveToTargetPosition,
+        MoveBackToDefaultPosition
+    }
 
     protected override void HandleBehaviour()
     {
@@ -31,21 +37,23 @@ public class StabWeapon : Weapon
         }
         else 
         {
-            if (!isMoveToTarget)
+            switch (attackState)
             {
-                if (transform.MoveToPosition(targetPosition, moveSpeed))
-                {
-                    isMoveToTarget = true;
-                    DealDamage();
-                }
-            }
-            else
-            {
-                if (transform.MoveToPosition(_player.WeaponManager.GetFollowPosition(this), moveSpeed))
-                {
-                    isAttacking = false;
-                    isMoveToTarget = false;
-                }
+                case State.MoveToTargetPosition:
+                    if (transform.MoveToPosition(targetPosition, moveSpeed))
+                    {
+                        DealDamage();
+                        attackState = State.MoveBackToDefaultPosition;
+                    }
+                    break;
+
+                case State.MoveBackToDefaultPosition:
+                    if (transform.MoveToPosition(_player.WeaponManager.GetFollowPosition(this), moveSpeed))
+                    {
+                        isAttacking = false;
+                        attackState = State.MoveToTargetPosition;
+                    }
+                    break;
             }
         }
 
@@ -72,7 +80,7 @@ public class StabWeapon : Weapon
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (damagePoint == null) return;
         Gizmos.color = Color.red;

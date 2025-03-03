@@ -8,7 +8,7 @@ public class SwingWeapon : Weapon
     [SerializeField] private float moveToSwing = 10f;
     [SerializeField] private float swingAngle = 90;
 
-    private List<Transform> targetsInSwing;
+    private List<Enemy> enemiesInSwing;
     private float rotatedAngle;
     private Vector2 centerPoint;
     private Vector2 startSwingPosition;
@@ -34,8 +34,8 @@ public class SwingWeapon : Weapon
                 if (attackTimer >= GetCurrentAttackSpeed())
                 {
                     Vector2 swingDirection = enemy.position - transform.position;
-                    targetsInSwing = weaponDetect.GetTargetsInCone(swingDirection, swingAngle, GetCurrentRange());
-                    float longestDistance = LongestTargetDistance(targetsInSwing);
+                    enemiesInSwing = weaponDetect.GetEnemysInCone(swingDirection, swingAngle, GetCurrentRange());
+                    float longestDistance = LongestTargetDistance(enemiesInSwing);
                     
                     if(longestDistance > 0)
                     { 
@@ -92,29 +92,26 @@ public class SwingWeapon : Weapon
         weaponDetect.SetDetectable(!isAttacking);
     }
 
-    private float LongestTargetDistance(List<Transform> targets)
+    private float LongestTargetDistance(List<Enemy> enemies)
     {
-        if(targets == null || targets.Count == 0) return -1;
+        if(enemies == null || enemies.Count == 0) return -1;
         
         float longestDistance = float.MinValue;
-        foreach (var item in targets)
+        foreach (var item in enemies)
         {
-            longestDistance = Mathf.Max(longestDistance, Vector2.Distance(transform.position, item.position)); 
+            longestDistance = Mathf.Max(longestDistance, Vector2.Distance(transform.position, item.transform.position)); 
         }
         return longestDistance;
     }
 
     private void DealDamage()
     {
-        if (targetsInSwing == null) return;
+        if (enemiesInSwing == null) return;
         
-        foreach (var item in targetsInSwing)
+        foreach (var item in enemiesInSwing)
         {
-            if (item.TryGetComponent(out Enemy e))
-            {
-                DealDamageToEnemy(e);
-            }
+            DealDamageToEnemy(item);
         }
-        targetsInSwing = null;
+        enemiesInSwing = null;
     }
 }

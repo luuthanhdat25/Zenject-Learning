@@ -460,6 +460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404948918}
   - component: {fileID: 404948917}
+  - component: {fileID: 404948919}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -494,6 +495,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404948919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404948916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 404948917}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &409939740
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416225852}
   - component: {fileID: 416225851}
+  - component: {fileID: 416225853}
   m_Layer: 0
   m_Name: Border - Point
   m_TagString: Untagged
@@ -680,6 +700,24 @@ Transform:
   - {fileID: 749040091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &416225853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416225850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 416225851}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &467173362
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 467173364}
   - component: {fileID: 467173363}
+  - component: {fileID: 467173365}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -725,6 +764,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467173365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467173362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 467173363}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &487098918
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,7 +4059,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 1
   weaponsStart:
-  - Hammer
+  - Knife
+  - Knife
+  - Knife
 --- !u!114 &1021400311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4875,9 +4934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46440a5cca5100648a53fcce11f5637b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  border: {fileID: 416225851}
-  inputManager: {fileID: 404948917}
-  dataManager: {fileID: 467173363}
 --- !u!114 &1449619663
 MonoBehaviour:
   m_ObjectHideFlags: 0

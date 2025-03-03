@@ -6,19 +6,22 @@ public class WeaponDetect : MonoBehaviour
     public Transform TargetEnemy { get; private set; }
     [SerializeField] private CircleCollider2D circleCollider2D;
     
-    private List<Transform> targetList = new List<Transform>();
+    private Dictionary<Transform, Enemy> enemyDic = new ();
 
     private const float NORMALIZE_DIVINE_RANGE = 100F;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (targetList.Contains(collision.transform)) return;
-        targetList.Add(collision.transform);
+        if (enemyDic.ContainsKey(collision.transform)) return;
+        if(collision.TryGetComponent(out Enemy e))
+        {
+            enemyDic.Add(collision.transform, e);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        targetList.Remove(collision.transform);
+        enemyDic.Remove(collision.transform);
     }
 
     private void Update() => UpdateNearestTarget();
@@ -26,49 +29,54 @@ public class WeaponDetect : MonoBehaviour
     private void UpdateNearestTarget()
     {
         TargetEnemy = null;
-        if (targetList.Count == 0) return;
+        if (enemyDic.Count == 0) return;
         float minDistance = float.MaxValue;
 
-        foreach (var target in targetList)
+        foreach (var target in enemyDic)
         {
-            float distance = Vector2.Distance(transform.position, target.position);
+            float distance = Vector2.Distance(transform.position, target.Key.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
-                TargetEnemy = target;
+                TargetEnemy = target.Key;
             }
         }
     }
 
     public void RemoveTarget(Transform target)
     {
-        if(!targetList.Contains(target)) return;
-        targetList.Remove(target);
+        if(!enemyDic.ContainsKey(target)) return;
+        enemyDic.Remove(target);
     }
 
-    public List<Transform> GetTargetsInCone(Vector2 coneDirection, float coneAngle, float coneRadius)
+    public List<Enemy> GetEnemysInCone(Vector2 coneDirection, float coneAngle, float coneRadius)
     {
-        List<Transform> targetList = new ();
-        if (this.targetList.Count == 0) return targetList;
+        List<Enemy> enemyList = new ();
+        if (this.enemyDic.Count == 0) return enemyList;
 
         float validAngle = coneAngle / 2;
-        foreach (var target in this.targetList)
+        foreach (var enemy in this.enemyDic)
         {
-            Vector2 directionToEnemy = target.position - transform.position;
+            Vector2 directionToEnemy = enemy.Key.position - transform.position;
             float angleGap = Vector2.Angle(directionToEnemy, coneDirection);
 
             if(angleGap <= validAngle)
             {
-                targetList.Add(target);
+                enemyList.Add(enemy.Value);
             }
         }
-        return targetList;
+        return enemyList;
+    }
+
+    public Enemy GetEnemyByTransform(Transform transform)
+    {
+        return enemyDic[transform];
     }
 
     public void SetDetectable(bool value)
     {
         circleCollider2D.enabled = value;
-        if (!value) targetList.Clear();
+        if (!value) enemyDic.Clear();
     }
 
     public void SetRange(float range)
