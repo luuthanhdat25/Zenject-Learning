@@ -4003,9 +4003,6 @@ MonoBehaviour:
   radius: 1
   weaponsStart:
   - Hammer
-  - Hammer
-  - Hammer
-  - Hammer
 --- !u!114 &1021400311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4881,7 +4878,6 @@ MonoBehaviour:
   border: {fileID: 416225851}
   inputManager: {fileID: 404948917}
   dataManager: {fileID: 467173363}
-  playerPrefab: {fileID: 1021400305}
 --- !u!114 &1449619663
 MonoBehaviour:
   m_ObjectHideFlags: 0

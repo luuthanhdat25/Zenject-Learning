@@ -18,7 +18,7 @@ MonoBehaviour:
     MoveSpeed: 1
     MaxHP: 3
   EnemyManager:
-    TimeSpawn: 0.5
+    TimeSpawn: 0.8
     SpawnOnStart: 1
   PlayerStats:
     MaxHP: 10

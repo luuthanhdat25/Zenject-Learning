@@ -6,7 +6,6 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private BorderPoints border;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private DataManager dataManager;
-    [SerializeField] private Player playerPrefab;
 
     [Inject] private Settings _settings;
 
@@ -20,7 +19,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<BorderPoints>().FromComponentOn(border.gameObject).AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
 
-        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(10)
+        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(1)
             .FromComponentInNewPrefab(_settings.EnemyPrefab)
             .UnderTransformGroup("EnemyPool");
     }

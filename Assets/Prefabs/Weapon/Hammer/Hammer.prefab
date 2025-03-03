@@ -182,6 +182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponDetect: {fileID: 1914260657085608100}
-  swingSpeed: 300
-  moveToSwing: 15
+  swingSpeed: 350
+  moveToSwing: 20
   swingAngle: 70

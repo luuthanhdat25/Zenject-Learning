@@ -34,11 +34,11 @@ public class SwingWeapon : Weapon
                 if (attackTimer >= GetCurrentAttackSpeed())
                 {
                     Vector2 swingDirection = enemy.position - transform.position;
-                    targetsInSwing = weaponDetect.GetTargetsInCone(swingDirection, swingAngle);
+                    targetsInSwing = weaponDetect.GetTargetsInCone(swingDirection, swingAngle, GetCurrentRange());
                     float longestDistance = LongestTargetDistance(targetsInSwing);
                     
                     if(longestDistance > 0)
-                    {
+                    { 
                         isAttacking = true;
                         attackTimer = 0;
                         

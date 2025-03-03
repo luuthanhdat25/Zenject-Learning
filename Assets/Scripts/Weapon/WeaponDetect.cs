@@ -12,6 +12,7 @@ public class WeaponDetect : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (targetList.Contains(collision.transform)) return;
         targetList.Add(collision.transform);
     }
 
@@ -45,17 +46,17 @@ public class WeaponDetect : MonoBehaviour
         targetList.Remove(target);
     }
 
-    public List<Transform> GetTargetsInCone(Vector2 coneDirection, float coneRadius)
+    public List<Transform> GetTargetsInCone(Vector2 coneDirection, float coneAngle, float coneRadius)
     {
         List<Transform> targetList = new ();
         if (this.targetList.Count == 0) return targetList;
 
-        float validAngle = coneRadius / 2;
+        float validAngle = coneAngle / 2;
         foreach (var target in this.targetList)
         {
             Vector2 directionToEnemy = target.position - transform.position;
-
             float angleGap = Vector2.Angle(directionToEnemy, coneDirection);
+
             if(angleGap <= validAngle)
             {
                 targetList.Add(target);
@@ -74,5 +75,10 @@ public class WeaponDetect : MonoBehaviour
     {
         float rangeNormalize = range / NORMALIZE_DIVINE_RANGE;
         circleCollider2D.radius = rangeNormalize > 0.25f ? rangeNormalize : 0.25f;
+    }
+
+    public bool IsInDetectRange(Transform target)
+    {
+        return Vector2.Distance(target.position, transform.position) <= circleCollider2D.radius;
     }
 }

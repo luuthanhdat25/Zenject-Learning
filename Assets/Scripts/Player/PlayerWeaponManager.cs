@@ -58,6 +58,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         Weapon newWeapon = Instantiate(data.Prefab);
         newWeapon.Init(data, _player, _inputManager);
+        newWeapon.name = $"{data.Name}_{weaponDic.Count}";
         weaponDic.Add(newWeapon, Vector2.zero);
         return newWeapon;
     }

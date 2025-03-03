@@ -71,7 +71,12 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void UpdateRange()
     {
-        weaponDetect.SetRange(GetCurrentStats().Range + _player.CurrentStats.Range);
+        weaponDetect.SetRange(GetCurrentRange());
+    }
+
+    protected float GetCurrentRange()
+    {
+        return GetCurrentStats().Range + _player.CurrentStats.Range;
     }
 
     protected virtual void RotateFollowInputDirection()
