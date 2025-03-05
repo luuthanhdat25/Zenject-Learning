@@ -3,6 +3,8 @@ using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
+    [SerializeField] private Transform worldSpaceCanvas;
+    
     [Inject] private Settings _settings;
 
     public override void InstallBindings()
@@ -11,15 +13,23 @@ public class GameInstaller : MonoInstaller
         GameSignalInstaller.Install(Container);
 
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<UIDamageFloatTextManager>().AsSingle();
 
-        Container.BindMemoryPool<Enemy, EnemyPool>().WithInitialSize(1)
+        Container.BindMemoryPool<Enemy, EnemyPool>()
+            .WithInitialSize(10)
             .FromComponentInNewPrefab(_settings.EnemyPrefab)
             .UnderTransformGroup("EnemyPool");
+
+        Container.BindMemoryPool<UIDamageFloatingText, DamageFloatingTextPool>()
+            .WithInitialSize(10)
+            .FromComponentInNewPrefab(_settings.DamageFloatingTextPrefab)
+            .UnderTransform(worldSpaceCanvas);
     }
 
     [System.Serializable]
     public class Settings
     {
         public Enemy EnemyPrefab;
+        public UIDamageFloatingText DamageFloatingTextPrefab;
     }
 }

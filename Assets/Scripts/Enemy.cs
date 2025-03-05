@@ -76,6 +76,13 @@ public class Enemy : MonoBehaviour
     {
         if (currentHP < 0) return;
 
+        _signalBus.Fire(new EnemyGetHit
+        {
+            DamageHit = value,
+            IsCrit = isCrit,
+            Position = transform.position
+        });
+
         if (currentHP > 0)
         {
             currentHP -= value;

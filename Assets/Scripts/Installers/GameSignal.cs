@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class DealDamagePlayer
 {
     public int Value;
@@ -25,3 +27,10 @@ public class UpdatePlayerLevel
 }
 
 public class UpdateHPRegeneration { }
+
+public class EnemyGetHit 
+{
+    public int DamageHit;
+    public bool IsCrit;
+    public Vector2 Position;
+}

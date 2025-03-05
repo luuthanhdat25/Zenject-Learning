@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameInstaller:
     EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
+    DamageFloatingTextPrefab: {fileID: 5878332269972635318, guid: 4eb7949d8dde2404596c5e961c521023, type: 3}
   Enemy:
     MoveSpeed: 1
     MaxHP: 3

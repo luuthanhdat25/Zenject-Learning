@@ -11,6 +11,7 @@ public class GameSignalInstaller : Installer<GameSignalInstaller>
         Container.DeclareSignal<PlayerGetHit>();
         Container.DeclareSignal<PlayerDie>();
         Container.DeclareSignal<UpdateHPRegeneration>();
+        Container.DeclareSignal<EnemyGetHit>();
     }
 }
 
