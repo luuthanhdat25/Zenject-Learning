@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     [System.Serializable]
     public class Stats
     {
-        public int MaxHP = 5;
+        public float MaxHP = 5;
         public int HPRegeneration;
         public int Lifesteal;
         public float Damage;

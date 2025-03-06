@@ -112,7 +112,7 @@ public abstract class Weapon : MonoBehaviour
 
         if (isCrit && damageDealToEnemy == damage) isCrit = false;
         //Debug.Log($"[{_settings.Name}] Damage Deal: {damageDealToEnemy}, isCrit: {isCrit}");
-        enemy.DeductHP(damageDealToEnemy, isCrit, weaponDetect);
+        enemy.DeductHP(damageDealToEnemy, isCrit, weaponDetect, GetCurrentStats().Knockback);
     }
 
     protected virtual bool IsCritDeal() => Random.Range(0, 100) < critChange.CritRate;

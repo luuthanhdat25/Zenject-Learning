@@ -16,10 +16,14 @@ MonoBehaviour:
     EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
     DamageFloatingTextPrefab: {fileID: 5878332269972635318, guid: 4eb7949d8dde2404596c5e961c521023, type: 3}
   Enemy:
-    MoveSpeed: 1
-    MaxHP: 3
+    BaseHP: 1
+    HPIncreasePerWave: 2
+    Speed: 2
+    Damage: 1
+    DamageIncreasePerWave: 0.6
+    canBeKnockBack: 1
   EnemyManager:
-    TimeSpawn: 0.8
+    TimeSpawn: 0.5
     SpawnOnStart: 1
   PlayerStats:
     MaxHP: 10
@@ -31,7 +35,7 @@ MonoBehaviour:
     ElementalDamage: 0
     AttackSpeed: 0
     CritChance: 0
-    Range: 100
+    Range: 50
     Armor: 0
     Dodge: 0
     Speed: 0

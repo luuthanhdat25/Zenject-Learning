@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 using System;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,8 +10,9 @@ public class Enemy : MonoBehaviour
     private EnemyPool _pool;
     private SignalBus _signalBus;
     private bool isMoveable = true;
-    private int currentHP;
+    private float currentHP;
     private bool isDespawned = false;
+    private const float KNOCKBACK_NORMALIZE = 50f;
 
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
@@ -27,7 +29,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject == _player.gameObject && !isDespawned)
         {
-            _signalBus.Fire(new DealDamagePlayer() { Value = currentHP });
+            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.Damage });
             Despawn();
         }
     }
@@ -41,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     public void ResetSetting()
     {
-        currentHP = _settings.MaxHP;
+        currentHP = _settings.BaseHP;
         isMoveable = true;
         isDespawned = false;
     }
@@ -69,10 +71,10 @@ public class Enemy : MonoBehaviour
             currentScale.x *= -1;
             transform.localScale = currentScale;
         }
-        rigidbody2D.velocity = direction * _settings.MoveSpeed;
+        rigidbody2D.velocity = direction * _settings.Speed;
     }
 
-    public void DeductHP(int value, bool isCrit, WeaponDetect weaponDetect)
+    public void DeductHP(int value, bool isCrit, WeaponDetect weaponDetect, int knockBack)
     {
         if (currentHP < 0) return;
 
@@ -82,6 +84,8 @@ public class Enemy : MonoBehaviour
             IsCrit = isCrit,
             Position = transform.position
         });
+
+        HandleBeKnockback(knockBack);
 
         if (currentHP > 0)
         {
@@ -98,6 +102,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void HandleBeKnockback(int knockBack)
+    {
+        if (knockBack > 0)
+        {
+            Vector2 knockBackDirection = (transform.position - _player.transform.position).normalized;
+            transform.position = (knockBackDirection * knockBack / KNOCKBACK_NORMALIZE) + (Vector2)transform.position;
+        }
+    }
+
     private void Despawn()
     {
         if (isDespawned) return;
@@ -108,8 +121,12 @@ public class Enemy : MonoBehaviour
     [System.Serializable]
     public class Settings
     {
-        public float MoveSpeed;
-        public int MaxHP = 1;
+        public int BaseHP = 1;
+        public int HPIncreasePerWave = 2;
+        public float Speed = 200;
+        public int Damage = 1;
+        public float DamageIncreasePerWave = 0.6f;
+        public bool canBeKnockBack = true;
     }
 }
 

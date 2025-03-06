@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
     [Inject] private Player player;
     [Inject] private SignalBus signalBus;
 
-    private int currentHP;
+    private float currentHP;
     private float regenTimer;
     private float timeRegeneration;
 

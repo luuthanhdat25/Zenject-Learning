@@ -7,8 +7,8 @@ public class DealDamagePlayer
 
 public class UpdatePlayerHP
 {
-    public int CurrentHP;
-    public int MaxHP;
+    public float CurrentHP;
+    public float MaxHP;
 }
 
 public class PlayerGetHit { }

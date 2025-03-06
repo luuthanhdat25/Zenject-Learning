@@ -23,7 +23,7 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void UpdateHealthBar(UpdatePlayerHP args)
     {
-        healthBar.fillAmount = (float) args.CurrentHP / args.MaxHP;
+        healthBar.fillAmount = args.CurrentHP / args.MaxHP;
         textMesh.text = $"{args.CurrentHP}/{args.MaxHP}";
     }
 }
