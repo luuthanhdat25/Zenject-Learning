@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     private Vector2 targetPosition;
     private Action<Enemy> onDealDamage;
-    public void Init(Vector2 targetPosition, float range, Action<Enemy> onDealDamage)
+    public void Init(Vector2 targetPosition, Action<Enemy> onDealDamage)
     {
         this.targetPosition = targetPosition;
         transform.RotateLootAt(targetPosition);

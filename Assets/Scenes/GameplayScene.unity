@@ -4059,7 +4059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0.5
   weaponsStart:
-  - Knife
+  - Hammer
+  - Hammer
 --- !u!114 &1021400311
 MonoBehaviour:
   m_ObjectHideFlags: 0

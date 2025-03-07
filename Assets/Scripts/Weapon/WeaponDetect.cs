@@ -8,8 +8,6 @@ public class WeaponDetect : MonoBehaviour
     
     private Dictionary<Transform, Enemy> enemyDic = new ();
 
-    private const float NORMALIZE_DIVINE_RANGE = 100F;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (enemyDic.ContainsKey(collision.transform)) return;
@@ -81,8 +79,7 @@ public class WeaponDetect : MonoBehaviour
 
     public void SetRange(float range)
     {
-        float rangeNormalize = range / NORMALIZE_DIVINE_RANGE;
-        circleCollider2D.radius = rangeNormalize > 0.25f ? rangeNormalize : 0.25f;
+        circleCollider2D.radius = range > 0.25f ? range : 0.25f;
     }
 
     public bool IsInDetectRange(Transform target)

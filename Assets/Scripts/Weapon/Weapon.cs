@@ -12,6 +12,7 @@ public abstract class Weapon : MonoBehaviour
     protected int damage;
     protected CritChange critChange;
     protected float attackTimer = 0;
+    private const float NORMALIZE_DIVINE_RANGE = 100F;
 
     private void Awake()
     {
@@ -73,7 +74,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected float GetCurrentRange()
     {
-        return GetCurrentStats().Range + _player.CurrentStats.Range;
+        return (GetCurrentStats().Range + _player.CurrentStats.Range) / NORMALIZE_DIVINE_RANGE;
     }
 
     protected virtual void RotateFollowInputDirection()
