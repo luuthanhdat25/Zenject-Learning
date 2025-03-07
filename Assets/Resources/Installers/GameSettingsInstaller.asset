@@ -29,37 +29,24 @@ MonoBehaviour:
   PlayerStats:
     MaxHP: 10
     HPRegeneration: 0
-    Lifesteal: 0
     Damage: 0
     MeleeDamage: 10
     RangedDamage: 0
-    ElementalDamage: 0
     AttackSpeed: 0
     CritChance: 0
     Range: 50
     Armor: 0
-    Dodge: 0
     Speed: 0
-    Luck: 0
-    Harvesting: 0
   Weapons:
   - Name: Knife
     Icon: {fileID: 21300000, guid: cfc3e637e1f63a54fb2a697a547d1465, type: 3}
     Prefab: {fileID: 4197799259385618612, guid: 0c2399521a36a4f40a66c64e9d87905b, type: 3}
-    types: 04000000
     TierStats:
     - BaseDamage: 20
       BonusDamage:
         MeleeDamage: 80
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0.78
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 0
       Cris:
@@ -72,14 +59,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 80
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 0.86
       Cris:
@@ -92,14 +72,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 80
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 0.93
       Cris:
@@ -112,14 +85,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 80
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.01
       Cris:
@@ -131,20 +97,12 @@ MonoBehaviour:
   - Name: Pistol
     Icon: {fileID: 695973850, guid: e468820cf7da8804c8baaafd5347ce19, type: 3}
     Prefab: {fileID: -722039793915539582, guid: 98ba9bd2e9c60bb4bace73ca2d5f054a, type: 3}
-    types: 03000000
     TierStats:
     - BaseDamage: 50
       BonusDamage:
         MeleeDamage: 0
         RangeDamage: 100
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 0.87
       Cris:
@@ -157,14 +115,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 0
         RangeDamage: 100
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.03
       Cris:
@@ -177,14 +128,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 0
         RangeDamage: 100
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.12
       Cris:
@@ -197,14 +141,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 0
         RangeDamage: 100
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.2
       Cris:
@@ -216,20 +153,12 @@ MonoBehaviour:
   - Name: Hammer
     Icon: {fileID: 21300000, guid: efce5fb03eb1fdd43abe45d949f7210b, type: 3}
     Prefab: {fileID: 1258207665468570509, guid: cc5d24fd7c7ac5d4fb2483ba91c57131, type: 3}
-    types: 04000000
     TierStats:
     - BaseDamage: 110
       BonusDamage:
         MeleeDamage: 200
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.5
       Cris:
@@ -242,14 +171,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 175
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.59
       Cris:
@@ -262,14 +184,7 @@ MonoBehaviour:
       BonusDamage:
         MeleeDamage: 150
         RangeDamage: 0
-        ElementalDamage: 0
-        AttackSpeed: 0
-        MaxHP: 0
         Range: 0
-        Speed: 0
-        Luck: 0
-        Level: 0
-        Lifesteal: 0
         Armor: 0
       AttackSpeed: 1.67
       Cris:

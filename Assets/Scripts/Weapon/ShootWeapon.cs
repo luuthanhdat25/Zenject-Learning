@@ -49,7 +49,7 @@ public class ShootWeapon : Weapon
     {
         Bullet bullet = Instantiate(bulletPrefab);
         bullet.transform.position = shootingPoint.position;
-        bullet.Init(enemy.position, GetCurrentStats().Range, DealDamageToEnemy);
+        bullet.Init((enemy.position - shootingPoint.position).normalized * GetCurrentStats().Range/100 + shootingPoint.position, GetCurrentStats().Range, DealDamageToEnemy);
     }
 
     private void PlayShootAnimation(float attackSpeed)

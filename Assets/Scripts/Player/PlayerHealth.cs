@@ -35,16 +35,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnGetHit(DealDamagePlayer args)
     {
-        if (CanDodge()) return;
         DeductHP(args.Value);
     }
-
-    private bool CanDodge()
-    {
-        float randomValue = Random.Range(0f, 1f);
-        return randomValue < player.CurrentStats.Dodge / 100;
-    }
-
+ 
     private void DeductHP(int value)
     {
         if (currentHP < 0) return;  

@@ -59,12 +59,9 @@ public abstract class Weapon : MonoBehaviour
         int damageBonus =
             Mathf.RoundToInt((playerStats.MeleeDamage * currentStats.BonusDamage.MeleeDamage
             + playerStats.RangedDamage * currentStats.BonusDamage.RangeDamage
-            + playerStats.ElementalDamage * currentStats.BonusDamage.ElementalDamage
             + playerStats.Armor * currentStats.BonusDamage.Armor
             + playerStats.Range * currentStats.BonusDamage.Range
-            + playerStats.AttackSpeed * currentStats.BonusDamage.AttackSpeed
-            + playerStats.Luck * currentStats.BonusDamage.Luck
-            + _player.Level * currentStats.BonusDamage.Level) / 100);
+            ) / 100);
         damage = currentStats.BaseDamage + damageBonus;
         critChange = currentStats.Cris;
     }
@@ -134,8 +131,6 @@ public abstract class Weapon : MonoBehaviour
         public string Name;
         public Sprite Icon;
         public Weapon Prefab;
-        public Type[] types;
-        
 
         [Header("Stats")]
         public TierStat[] TierStats;
@@ -173,14 +168,7 @@ public abstract class Weapon : MonoBehaviour
     {
         public float MeleeDamage;
         public float RangeDamage;
-        public float ElementalDamage;
-        public float AttackSpeed;
-        public float MaxHP;
         public float Range;
-        public float Speed;
-        public float Luck;
-        public float Level;
-        public float Lifesteal;
         public float Armor;
     }
 

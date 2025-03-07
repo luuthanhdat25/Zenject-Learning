@@ -29,6 +29,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void Start()
     {
+        radius += 0.1f * weaponsStart.Count();
         foreach (var weaponName in weaponsStart)
         {
             Weapon.Settings weaponData = _dataManager.GetWeaponDatas().FirstOrDefault(w => w.Name == weaponName);

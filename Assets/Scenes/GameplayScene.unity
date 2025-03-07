@@ -4057,10 +4057,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbad84ab111a2cc40aadaff46e4e1bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
+  radius: 0.5
   weaponsStart:
-  - Pistol
-  - Pistol
+  - Knife
 --- !u!114 &1021400311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8106,5 +8105,5 @@ SceneRoots:
   - {fileID: 1678861134}
   - {fileID: 404948918}
   - {fileID: 467173364}
-  - {fileID: 1021400304}
   - {fileID: 188704048}
+  - {fileID: 1021400304}

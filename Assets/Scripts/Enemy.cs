@@ -78,17 +78,15 @@ public class Enemy : MonoBehaviour
     {
         if (currentHP < 0) return;
 
-        _signalBus.Fire(new EnemyGetHit
-        {
-            DamageHit = value,
-            IsCrit = isCrit,
-            Position = transform.position
-        });
-
-        HandleBeKnockback(knockBack);
-
         if (currentHP > 0)
         {
+            _signalBus.Fire(new EnemyGetHit
+            {
+                DamageHit = value,
+                IsCrit = isCrit,
+                Position = transform.position
+            });
+
             currentHP -= value;
             if (currentHP < 0) currentHP = 0;
 
@@ -99,6 +97,10 @@ public class Enemy : MonoBehaviour
         if (currentHP == 0 && !isDespawned && weaponDetect.IsInDetectRange(transform))
         {
             Despawn();
+        }
+        else
+        {
+            HandleBeKnockback(knockBack);
         }
     }
 

@@ -32,7 +32,6 @@ public class Bullet : MonoBehaviour
     {
         if (collision.TryGetComponent(out Enemy e))
         {
-            Debug.Log("Bullet hit!");
             onDealDamage(e);
             //Instantiate(gunShoot.ImpactParticle, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
             //Play hit vfx
