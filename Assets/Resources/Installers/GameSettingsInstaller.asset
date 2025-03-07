@@ -23,8 +23,9 @@ MonoBehaviour:
     DamageIncreasePerWave: 0.6
     canBeKnockBack: 1
   EnemyManager:
-    TimeSpawn: 0.5
+    TimeSpawn: 1
     SpawnOnStart: 1
+    MinDistanceToPlayer: 2
   PlayerStats:
     MaxHP: 10
     HPRegeneration: 0

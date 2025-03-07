@@ -31,7 +31,7 @@ public class EnemyManager : IInitializable, IFixedTickable
     private void SpawnEnemy()
     {
         Enemy enemy = _enemyPool.Spawn(null);
-        enemy.transform.position = _border.GetRandomPositionInBorder();
+        enemy.transform.position = _border.GetRandomPositionInBorder(_settings.MinDistanceToPlayer);
         //CountNumberInPool();
     }
 
@@ -63,5 +63,6 @@ public class EnemyManager : IInitializable, IFixedTickable
     {
         public float TimeSpawn;
         public bool SpawnOnStart;
+        public float MinDistanceToPlayer;
     }
 }
