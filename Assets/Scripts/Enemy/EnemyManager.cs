@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
 public class EnemyManager : IInitializable, IFixedTickable
 {
     private BorderPoints _border;
-    private EnemyPool _enemyPool;
+    private Spawner _spawner;
     private Settings _settings;
     private SignalBus _signalBus;
     private float timer = 0;
     private bool isSpawn = true;
+    private Enemy.Settings _enemySettings;
 
     [Inject]
-    private void Construct(BorderPoints border, EnemyPool enemyPool, Settings settings, SignalBus signalBus)
+    private void Construct(BorderPoints border, Enemy.Settings enemySettings, Spawner spawner, Settings settings, SignalBus signalBus)
     {
         this._border = border;
-        this._enemyPool = enemyPool;
+        this._enemySettings = enemySettings;
+        this._spawner = spawner;
         this._settings = settings;
         this._signalBus = signalBus;
     }
@@ -30,21 +33,9 @@ public class EnemyManager : IInitializable, IFixedTickable
 
     private void SpawnEnemy()
     {
-        Enemy enemy = _enemyPool.Spawn(null);
-        enemy.transform.position = _border.GetRandomPositionInBorder(_settings.MinDistanceToPlayer);
-        //CountNumberInPool();
-    }
-
-    private void ClearAll()
-    {
-        _enemyPool.Clear();
-    }
-
-    public void CountNumberInPool()
-    {
-        Debug.Log("[Enemy Manager] Total In pool: " + _enemyPool.NumTotal);
-        Debug.Log("[Enemy Manager] Total active: " + _enemyPool.NumActive);
-        Debug.Log("[Enemy Manager] Total inactive: " + _enemyPool.NumInactive);
+        var spawnPosition = _border.GetRandomPositionInBorder(_settings.MinDistanceToPlayer);
+        Enemy enemy = _spawner.CreateEnemy(_enemySettings.EnemySettings[0].Id, spawnPosition);
+        enemy.Init(_enemySettings.EnemySettings[0]);
     }
 
     public void FixedTick()

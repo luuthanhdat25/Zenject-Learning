@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 781de6281c96b3148a07e27bd968eefc, type: 3}
-  m_Name: GameSettingsInstaller
+  m_Name: GameSettings
   m_EditorClassIdentifier: 
   GameInstaller:
-    EnemyPrefab: {fileID: 4972115798529069009, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
     DamageFloatingTextPrefab: {fileID: 5878332269972635318, guid: 4eb7949d8dde2404596c5e961c521023, type: 3}
   Enemy:
-    BaseHP: 1
-    HPIncreasePerWave: 2
-    Speed: 2
-    Damage: 1
-    DamageIncreasePerWave: 0.6
-    canBeKnockBack: 1
+    EnemySettings:
+    - Id: dead_knight
+      BaseHP: 1
+      HPIncreasePerWave: 11
+      Speed: 2
+      Damage: 1
+      DamageIncreasePerWave: 11
+      canBeKnockBack: 1
+    DeadKnightPrefab: {fileID: 875783513774968932, guid: adca584d917dc2f4bbb48d89cf7acd7c, type: 3}
   EnemyManager:
     TimeSpawn: 1
     SpawnOnStart: 1

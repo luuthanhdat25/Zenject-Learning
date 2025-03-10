@@ -2,12 +2,14 @@
 using Zenject;
 using System;
 using DG.Tweening;
+using Zenject.SpaceFighter;
+using System.Collections.Generic;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, IDisposable
 {
     private Player _player;
-    private Settings _settings;
-    private EnemyPool _pool;
+    private IMemoryPool _pool;
+    private Setting _setting;
     private SignalBus _signalBus;
     private bool isMoveable = true;
     private float currentHP;
@@ -17,19 +19,25 @@ public class Enemy : MonoBehaviour
     [SerializeField] private new Rigidbody2D rigidbody2D;
 
     [Inject]
-    public void Construct(Settings settings, Player player, EnemyPool enemyPool, SignalBus signalBus)
+    public void Construct(Player player, SignalBus signalBus)
     {
-        _settings = settings;
         _player = player;
-        _pool = enemyPool;
         _signalBus = signalBus;
+    }
+
+    public virtual void Init(Setting setting)
+    {
+        _setting = setting;
+        currentHP = _setting.BaseHP;
+        isMoveable = true;
+        isDespawned = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == _player.gameObject && !isDespawned)
         {
-            _signalBus.Fire(new DealDamagePlayer() { Value = _settings.Damage });
+            _signalBus.Fire(new DealDamagePlayer() { Value = _setting.Damage });
             Despawn();
         }
     }
@@ -38,14 +46,6 @@ public class Enemy : MonoBehaviour
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         _signalBus.Subscribe<PlayerDie>(OnStopMoving);
-        ResetSetting();
-    }
-
-    public void ResetSetting()
-    {
-        currentHP = _settings.BaseHP;
-        isMoveable = true;
-        isDespawned = false;
     }
 
     private void OnStopMoving()
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
             currentScale.x *= -1;
             transform.localScale = currentScale;
         }
-        rigidbody2D.velocity = direction * _settings.Speed;
+        rigidbody2D.velocity = direction * _setting.Speed;
     }
 
     public void DeductHP(int value, bool isCrit, WeaponDetect weaponDetect, int knockBack)
@@ -117,26 +117,44 @@ public class Enemy : MonoBehaviour
     {
         if (isDespawned) return;
         isDespawned = true;
+        Dispose();
+    }
+
+    public void Dispose()
+    {
+        if (_pool == null) return;
         _pool.Despawn(this);
     }
 
-    [System.Serializable]
+    public void OnDespawned()
+    {
+        _pool = null;
+        gameObject.SetActive(false);
+    }
+
+    public void OnSpawned(Vector2 spawnPosition, IMemoryPool pool)
+    {
+        _pool = pool;
+        transform.position = spawnPosition;
+    }
+
+    [Serializable]
     public class Settings
     {
+        public List<Setting> EnemySettings;
+
+        public DeadKnightEnemy DeadKnightPrefab;
+    }
+
+    [Serializable]
+    public class Setting
+    {
+        public string Id;
         public int BaseHP = 1;
         public int HPIncreasePerWave = 2;
         public float Speed = 200;
         public int Damage = 1;
         public float DamageIncreasePerWave = 0.6f;
         public bool canBeKnockBack = true;
-    }
-}
-
-public class EnemyPool : MonoMemoryPool<Enemy.Settings, Enemy>
-{
-    protected override void OnSpawned(Enemy item)
-    {
-        base.OnSpawned(item);
-        item.ResetSetting();
     }
 }

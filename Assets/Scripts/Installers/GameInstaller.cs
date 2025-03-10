@@ -11,14 +11,11 @@ public class GameInstaller : MonoInstaller
     {
         SignalBusInstaller.Install(Container);
         GameSignalInstaller.Install(Container);
+        EnemyInstaller.Install(Container);
 
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<Spawner>().AsSingle();
         Container.BindInterfacesAndSelfTo<UIDamageFloatTextManager>().AsSingle();
-
-        Container.BindMemoryPool<Enemy, EnemyPool>()
-            .WithInitialSize(10)
-            .FromComponentInNewPrefab(_settings.EnemyPrefab)
-            .UnderTransformGroup("EnemyPool");
 
         Container.BindMemoryPool<UIDamageFloatingText, DamageFloatingTextPool>()
             .WithInitialSize(10)
@@ -29,7 +26,6 @@ public class GameInstaller : MonoInstaller
     [System.Serializable]
     public class Settings
     {
-        public Enemy EnemyPrefab;
         public UIDamageFloatingText DamageFloatingTextPrefab;
     }
 }
