@@ -129,6 +129,7 @@ public abstract class Weapon : MonoBehaviour
     public class Settings 
     {
         [Header("Display Info")]
+        public string Id;
         public string Name;
         public Sprite Icon;
         public Weapon Prefab;

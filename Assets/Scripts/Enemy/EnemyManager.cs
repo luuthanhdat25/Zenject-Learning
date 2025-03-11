@@ -10,10 +10,10 @@ public class EnemyManager : IInitializable, IFixedTickable
     private SignalBus _signalBus;
     private float timer = 0;
     private bool isSpawn = true;
-    private Enemy.Settings _enemySettings;
+    private EnemyInstaller.Settings _enemySettings;
 
     [Inject]
-    private void Construct(BorderPoints border, Enemy.Settings enemySettings, Spawner spawner, Settings settings, SignalBus signalBus)
+    private void Construct(BorderPoints border, EnemyInstaller.Settings enemySettings, Spawner spawner, Settings settings, SignalBus signalBus)
     {
         this._border = border;
         this._enemySettings = enemySettings;

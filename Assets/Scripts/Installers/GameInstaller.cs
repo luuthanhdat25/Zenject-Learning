@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ public class GameInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<Spawner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<InputManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<UIDamageFloatTextManager>().AsSingle();
 
         Container.BindMemoryPool<UIDamageFloatingText, DamageFloatingTextPool>()
@@ -23,7 +25,7 @@ public class GameInstaller : MonoInstaller
             .UnderTransform(worldSpaceCanvas);
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Settings
     {
         public UIDamageFloatingText DamageFloatingTextPrefab;

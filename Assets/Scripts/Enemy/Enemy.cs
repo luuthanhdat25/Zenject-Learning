@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, IDisposable
 {
     private Player _player;
     private IMemoryPool _pool;
-    private Setting _setting;
+    private EnemyInstaller.EnemyData _setting;
     private SignalBus _signalBus;
     private bool isMoveable = true;
     private float currentHP;
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, IDisposable
         _signalBus = signalBus;
     }
 
-    public virtual void Init(Setting setting)
+    public virtual void Init(EnemyInstaller.EnemyData setting)
     {
         _setting = setting;
         currentHP = _setting.BaseHP;
@@ -136,25 +136,5 @@ public class Enemy : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, IDisposable
     {
         _pool = pool;
         transform.position = spawnPosition;
-    }
-
-    [Serializable]
-    public class Settings
-    {
-        public List<Setting> EnemySettings;
-
-        public DeadKnightEnemy DeadKnightPrefab;
-    }
-
-    [Serializable]
-    public class Setting
-    {
-        public string Id;
-        public int BaseHP = 1;
-        public int HPIncreasePerWave = 2;
-        public float Speed = 200;
-        public int Damage = 1;
-        public float DamageIncreasePerWave = 0.6f;
-        public bool canBeKnockBack = true;
     }
 }
