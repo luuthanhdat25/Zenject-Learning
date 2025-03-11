@@ -9,19 +9,19 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private string[] weaponsStart;
     
     private Dictionary<Weapon, Vector2> weaponDic = new ();
-    private DataManager _dataManager;
     private InputManager _inputManager;
     private Player _player;
     private SignalBus _signalBus;
+    private List<Weapon.Settings> _weapons;
 
     [Inject]
     public void Construct
-        (DataManager dataManager, 
-        InputManager inputManager, 
+        (InputManager inputManager, 
         Player player,
+        List<Weapon.Settings> weapon,
         SignalBus signalBus)
     {
-        _dataManager = dataManager;
+        _weapons = weapon;
         _inputManager = inputManager;
         _player = player;
         _signalBus = signalBus;
@@ -32,7 +32,7 @@ public class PlayerWeaponManager : MonoBehaviour
         radius += 0.1f * weaponsStart.Count();
         foreach (var weaponName in weaponsStart)
         {
-            Weapon.Settings weaponData = _dataManager.GetWeaponDatas().FirstOrDefault(w => w.Name == weaponName);
+            Weapon.Settings weaponData = _weapons.FirstOrDefault(w => w.Name == weaponName);
             if(weaponData != null)
             {
                 Spawn(weaponData);

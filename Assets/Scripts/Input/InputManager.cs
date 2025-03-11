@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager 
 {
     private const string INPUT_HORIZONTAL = "Horizontal";
     private const string INPUT_VERTICAL = "Vertical";

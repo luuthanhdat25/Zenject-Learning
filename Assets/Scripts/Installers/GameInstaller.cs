@@ -15,6 +15,7 @@ public class GameInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<Spawner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<InputManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<UIDamageFloatTextManager>().AsSingle();
 
         Container.BindMemoryPool<UIDamageFloatingText, DamageFloatingTextPool>()

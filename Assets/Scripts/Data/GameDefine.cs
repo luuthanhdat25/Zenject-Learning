@@ -14,4 +14,11 @@ public static class GameDefine
         public const string BULLET_556 = "bullet_201";
         public const string BULLET_40 = "bullet_301";
     }
+
+    public static class WeaponEntity
+    {
+        public const string KNIFE = "Knife";
+        public const string HAMMER = "Hammer";
+        public const string PISTOL = "pistol";
+    }
 }

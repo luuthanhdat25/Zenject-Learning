@@ -141,9 +141,9 @@ public class Enemy : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, IDisposable
     [Serializable]
     public class Settings
     {
-        public List<Setting> EnemySettings;
-
         public DeadKnightEnemy DeadKnightPrefab;
+        
+        public List<Setting> EnemySettings;
     }
 
     [Serializable]
